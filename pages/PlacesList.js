@@ -1,8 +1,10 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, FlatList} from 'react-native';
 import {styles} from '../styles.js';
+import {openDatabase} from 'react-native-sqlite-storage';
+import PlaceCard from '../components/PlaceCard';
 
 type Props = {};
 
@@ -14,9 +16,40 @@ export default class PlacesList extends Component<Props> {
     constructor(props) {
         super(props);
         this.state = {
-            selectedPlaceId: null,
+            places: [],
+            places_number: 0,
         };
+        this.loadPlaces();
     }
+
+    loadPlaces = () => {
+        let db = openDatabase({name: 'db_en.db', createFromLocation: '~db_en.db'});
+        db.transaction(tx => {
+            tx.executeSql(
+                'SELECT * FROM places',
+                [],
+                (tx, results) => {
+                    let len = results.rows.length;
+                    this.setState({places_number: len});
+                    //console.log('len',len);
+                    if (len > 0) {
+                        let str = JSON.stringify(results.rows.item(0));
+                        //alert(str);
+                        let temp = [];
+                        for (let i = 0; i < len; ++i) {
+                            temp.push(results.rows.item(i));
+                        }
+                        //alert(JSON.stringify(temp));
+                        this.setState({
+                            places: temp,
+                        });
+                        //alert("*" + this.state.tours[0].name);
+                    } else {
+                        alert('No places found');
+                    }
+                });
+        });
+    };
 
     _onOpenPlacePressed = (placeId) => {
         alert(placeId);
@@ -41,6 +74,10 @@ export default class PlacesList extends Component<Props> {
                     color='#48BBEC'
                     title='Open Place with id 42'
                 />
+                <FlatList
+                    data = {this.state.places}
+                    renderItem = {(item) => <PlaceCard item={item["item"]}/>}
+                    keyExtractor = {item => item._id}/>
             </View>
         );
     }

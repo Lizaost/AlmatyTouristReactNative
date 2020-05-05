@@ -5,6 +5,7 @@ import {View, Text, Button, FlatList} from 'react-native';
 import {styles} from '../styles.js';
 import {openDatabase} from 'react-native-sqlite-storage';
 import PlaceCard from '../components/PlaceCard';
+import getDatabaseConnection from '../db';
 
 type Props = {};
 
@@ -23,7 +24,8 @@ export default class PlacesList extends Component<Props> {
     }
 
     loadPlaces = () => {
-        let db = openDatabase({name: 'db_en.db', createFromLocation: '~db_en.db'});
+        //let db = openDatabase({name: 'db_en.db', createFromLocation: '~db_en.db'});
+        let db = getDatabaseConnection();
         db.transaction(tx => {
             tx.executeSql(
                 'SELECT * FROM places',
@@ -70,9 +72,14 @@ export default class PlacesList extends Component<Props> {
                     title='Open Place with id 10'
                 />
                 <Button
-                    onPress={() => this._onOpenPlacePressed(42)}
+                    onPress={() => this._onOpenPlacePressed(11)}
                     color='#48BBEC'
-                    title='Open Place with id 42'
+                    title='Open Place with id 11'
+                />
+                <Button
+                    onPress={() => this._onOpenPlacePressed(12)}
+                    color='#48BBEC'
+                    title='Open Place with id 12'
                 />
                 <FlatList
                     data = {this.state.places}

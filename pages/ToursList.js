@@ -6,6 +6,7 @@ import {styles} from '../styles.js';
 import {openDatabase} from 'react-native-sqlite-storage';
 
 import TourCard from "../components/TourCard";
+import getDatabaseConnection from "../db.js";
 
 type Props = {};
 
@@ -23,6 +24,11 @@ export default class ToursList extends Component<Props> {
         title: 'Tours List',
     };
 
+    state = {
+        tours: null,
+        isToursListLoaded:false,
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -32,7 +38,8 @@ export default class ToursList extends Component<Props> {
     }
 
     loadTours = () => {
-        let db = openDatabase({name: 'db_en.db', createFromLocation: '~db_en.db'});
+        //let db = openDatabase({name: 'db_en.db', createFromLocation: '~db_en.db'});
+        let db = getDatabaseConnection();
         db.transaction(tx => {
             tx.executeSql(
                 'SELECT * FROM tours',
@@ -51,6 +58,7 @@ export default class ToursList extends Component<Props> {
                         //alert(JSON.stringify(temp));
                         this.setState({
                             tours: temp,
+                            isToursListLoaded: true,
                         });
                         //alert("*" + this.state.tours[0].name);
                     } else {
@@ -79,10 +87,13 @@ export default class ToursList extends Component<Props> {
                     color='#48BBEC'
                     title='Open Tour with id 2'
                 />
+                {this.state.isToursListLoaded ?
                 <FlatList
                 data = {this.state.tours}
                 renderItem = {(item) => <TourCard item={item["item"]}/>}
-                keyExtractor = {item => item._id}/>
+                keyExtractor = {item => item._id}/> : <Text style={styles.description}>
+                        LOADING
+                    </Text>}
             </View>
         );
     }

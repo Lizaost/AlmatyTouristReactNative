@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {View, ScrollView, Text, Button} from 'react-native';
 import {styles} from '../styles.js';
 import {openDatabase} from 'react-native-sqlite-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 type Props = {};
 
@@ -17,11 +18,25 @@ export default class StartPage extends Component<Props> {
         selectedItemId: null,
         all_tours: [],
         tours_number: 0,
+        likes: []
     };
 
     constructor(props) {
         super(props);
+        this.getLikes();
     }
+
+    getLikes = async () => {
+        try {
+            const value = await AsyncStorage.getItem("likes_list");
+            if(value !== null) {
+                // value previously stored
+                this.setState({likes: JSON.parse(value)});
+            }
+        } catch(e) {
+            console.log("Error loading likes_list from async storage: \n" + e)
+        }
+    };
 
     _onTestDatabaseConnectionPressed = () => {
         let db = openDatabase({name: 'db_en.db', createFromLocation: '~db_en.db'});
@@ -58,6 +73,10 @@ export default class StartPage extends Component<Props> {
         this.props.navigation.navigate(
             'PlacesList');
     };
+    _onOpenFavoritesListPressed = () => {
+        this.props.navigation.navigate(
+            'FavoritesList');
+    };
 
     render() {
         console.log('StartPage.render');
@@ -71,6 +90,12 @@ export default class StartPage extends Component<Props> {
                     <Text style={styles.description}>
                         item_string = {JSON.stringify(this.state.all_tours)}
                     </Text>
+                    <Text style={styles.description}>
+                        ---------------------
+                    </Text>
+                    <Text style={styles.description}>
+                        item_string = {JSON.stringify(this.state.likes)}
+                    </Text>
                     <Button
                         onPress={this._onOpenToursListPressed}
                         color='#48BBEC'
@@ -80,6 +105,11 @@ export default class StartPage extends Component<Props> {
                         onPress={this._onOpenPlacesListPressed}
                         color='#48BBEC'
                         title='Open places list'
+                    />
+                    <Button
+                        onPress={this._onOpenFavoritesListPressed}
+                        color='#48BBEC'
+                        title='Open favorites list'
                     />
                     <Button
                         onPress={this._onTestDatabaseConnectionPressed}

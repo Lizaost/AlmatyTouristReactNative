@@ -62,25 +62,25 @@ export default class PlacesList extends Component<Props> {
     render() {
         console.log('PlacesList.render');
         return (
-            <View style={styles.container}>
-                <Text style={styles.description}>
-                    PLACES LIST
-                </Text>
-                <Button
-                    onPress={() => this._onOpenPlacePressed(10)}
-                    color='#48BBEC'
-                    title='Open Place with id 10'
-                />
-                <Button
-                    onPress={() => this._onOpenPlacePressed(11)}
-                    color='#48BBEC'
-                    title='Open Place with id 11'
-                />
-                <Button
-                    onPress={() => this._onOpenPlacePressed(12)}
-                    color='#48BBEC'
-                    title='Open Place with id 12'
-                />
+            <View>
+                {/*<Text style={styles.description}>*/}
+                {/*    PLACES LIST*/}
+                {/*</Text>*/}
+                {/*<Button*/}
+                {/*    onPress={() => this._onOpenPlacePressed(10)}*/}
+                {/*    color='#48BBEC'*/}
+                {/*    title='Open Place with id 10'*/}
+                {/*/>*/}
+                {/*<Button*/}
+                {/*    onPress={() => this._onOpenPlacePressed(11)}*/}
+                {/*    color='#48BBEC'*/}
+                {/*    title='Open Place with id 11'*/}
+                {/*/>*/}
+                {/*<Button*/}
+                {/*    onPress={() => this._onOpenPlacePressed(12)}*/}
+                {/*    color='#48BBEC'*/}
+                {/*    title='Open Place with id 12'*/}
+                {/*/>*/}
                 <FlatList
                     data = {this.state.places}
                     renderItem = {(item) => <PlaceCard item={item["item"]}/>}

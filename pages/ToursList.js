@@ -78,15 +78,15 @@ export default class ToursList extends Component<Props> {
     render() {
         console.log('ToursList.render');
         return (
-            <View style={styles.container}>
-                <Text style={styles.description}>
-                    TOURS LIST
-                </Text>
-                <Button
-                    onPress={() => this._onOpenTourPressed(2)}
-                    color='#48BBEC'
-                    title='Open Tour with id 2'
-                />
+            <View>
+                {/*<Text style={styles.description}>*/}
+                {/*    TOURS LIST*/}
+                {/*</Text>*/}
+                {/*<Button*/}
+                {/*    onPress={() => this._onOpenTourPressed(2)}*/}
+                {/*    color='#48BBEC'*/}
+                {/*    title='Open Tour with id 2'*/}
+                {/*/>*/}
                 {this.state.isToursListLoaded ?
                 <FlatList
                 data = {this.state.tours}

@@ -1,6 +1,8 @@
 'use strict';
 
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+
+let screenWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
     description: {
@@ -34,5 +36,47 @@ export const styles = StyleSheet.create({
         width: 217,
         height: 138,
     },
+
+    cardBig: {
+        borderColor: 'black',
+        padding: 10,
+        marginBottom: 20,
+    },
+
+    cardBigName: {
+        fontSize: 24,
+        marginRight: 40,
+    },
+
+    cardBigDescription: {
+        fontSize: 18,
+        marginRight: 40,
+    },
+
+    cardBigImage: {
+        fontSize: 44,
+        alignContent: 'center',
+        height: 240,
+        backgroundColor: '#ccc'
+    },
+
+    cardBigFooter: {
+        flexDirection: 'row',
+        alignItems: 'flex-start'
+    },
+
+    cardRating: {
+        fontSize: 14,
+        width: 80,
+        height: 20,
+        backgroundColor: '#ccc'
+    },
+
+    cardNumberOfItems: {
+        fontSize: 14,
+        width: 100,
+        height: 20,
+        backgroundColor: '#aaa'
+    }
 });
 

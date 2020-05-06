@@ -39,13 +39,14 @@ export const styles = StyleSheet.create({
 
     cardBig: {
         borderColor: 'black',
-        padding: 10,
+        padding: 20,
         marginBottom: 20,
     },
 
     cardBigName: {
         fontSize: 24,
         marginRight: 40,
+        marginTop: 5,
     },
 
     cardBigDescription: {
@@ -62,11 +63,12 @@ export const styles = StyleSheet.create({
     cardBigFooter: {
         flexDirection: 'row',
         alignItems: 'flex-start',
+        marginTop: 5,
     },
 
     ratingContainer: {
-        width: 80,
         height: 20,
+        marginRight: 10,
         flexDirection: 'row'
     },
 

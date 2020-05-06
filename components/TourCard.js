@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {styles} from '../styles.js';
 import {images} from '../images.js';
 import getDatabaseConnection from '../db';
+import Rating from './Rating';
 
 
 export default class TourCard extends React.Component {
@@ -11,9 +12,21 @@ export default class TourCard extends React.Component {
         super(props);
         this.state = {
             placesCount: 0,
+            rating: 0,
         };
         this.getPlacesNumber(this.props.item._id);
     }
+
+    componentDidMount() {
+        this.getPlaceRating();
+    }
+
+    getPlaceRating = () => {
+        let placeId = this.props.item._id;
+        //TODO realize a server part for comments and ratings and use fetch to get rating
+        let rating = 7;
+        this.setState({rating: rating});
+    };
 
     getPlacesNumber = (tourId) => {
         let sql = 'SELECT count(*) AS places_number FROM tour_places GROUP BY tour_id HAVING tour_id=' + tourId;
@@ -54,7 +67,7 @@ export default class TourCard extends React.Component {
                     {item.description}
                 </Text>
                 <View style={styles.cardBigFooter}>
-                    <Text style={styles.cardRating}>RATING</Text>
+                    <Rating value={this.state.rating}/>
                     <Text
                         style={styles.cardNumberOfItems}>
                         {this.state.placesCount} {this.state.placesCount === 1 ? 'place' : 'places'}

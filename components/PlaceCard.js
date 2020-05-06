@@ -1,21 +1,30 @@
-import React, {Component} from 'react';
-import {View, Text, Button, FlatList, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../styles.js';
+import {images} from "../images.js";
 
-export default function PlaceCard({onpressHandler, item}) {
-    console.log('Rendering tour card for place with id ' + item._id);
-    console.log(item);
-    //let item = this.props.item;
-    return <TouchableOpacity onPress={() => onpressHandler(item._id)}>
-        <View style={styles.cardBig}>
-            <View style={styles.cardBigImage}><Text style={styles.description}>IMAGE ({item.cover_image})</Text></View>
-            <Text style={styles.cardBigName}>{item.name}</Text>
-            <Text style={styles.cardBigDescription} numberOfLines={3} ellipsizeMode='tail'>
-                {item.description}
-            </Text>
-            <View style={styles.cardBigFooter}>
-                <Text style={styles.cardRating}>RATING</Text>
+
+export default class PlaceCard extends React.Component{
+    render() {
+        let onpressHandler = this.props.onpressHandler;
+        let item = this.props.item;
+        console.log('Rendering tour card for place with id ' + item._id);
+        console.log(item);
+        let coverImageName = "place_photo_placeholder";
+        if (item.cover_image.length > 1 && images.hasOwnProperty(item.cover_image)){
+            coverImageName = item.cover_image;
+        }
+        return <TouchableOpacity onPress={() => onpressHandler(item._id)}>
+            <View style={styles.cardBig}>
+                <Image source={images[coverImageName]} style={styles.cardBigImage}/>
+                <Text style={styles.cardBigName}>{item.name}</Text>
+                <Text style={styles.cardBigDescription} numberOfLines={3} ellipsizeMode='tail'>
+                    {item.description}
+                </Text>
+                <View style={styles.cardBigFooter}>
+                    <Text style={styles.cardRating}>RATING</Text>
+                </View>
             </View>
-        </View>
-    </TouchableOpacity>;
+        </TouchableOpacity>;
+    }
 }

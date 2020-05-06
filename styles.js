@@ -54,12 +54,9 @@ export const styles = StyleSheet.create({
     },
 
     cardBigImage: {
-        height: 240,
-        // NEXT STYLES ARE ONLY FOR PLACEHOLDER BLOCK
-        fontSize: 20,
-        backgroundColor: '#ccc',
-        textAlign: 'center',
-        justifyContent: 'center',
+        height: 280,
+        width: '100%',
+        resizeMode: "cover",
     },
 
     cardBigFooter: {
@@ -85,7 +82,6 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         width: 100,
         height: 20,
-        backgroundColor: '#aaa',
     },
 
     startPageSlider: {

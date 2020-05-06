@@ -1,10 +1,12 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {View, ScrollView, Text, Button} from 'react-native';
+import {View, ScrollView, Text} from 'react-native';
 import {styles} from '../styles.js';
 import {openDatabase} from 'react-native-sqlite-storage';
 import AsyncStorage from '@react-native-community/async-storage';
+
+import Rating from '../components/Rating';
 
 type Props = {};
 
@@ -109,6 +111,18 @@ export default class StartPage extends Component<Props> {
                     </View>
 
                     <View style={styles.aboutCityContainer}>
+                        <Rating value={0}/>
+                        <Rating value={1}/>
+                        <Rating value={2}/>
+                        <Rating value={3}/>
+                        <Rating value={4}/>
+                        <Rating value={5}/>
+                        <Rating value={6}/>
+                        <Rating value={7}/>
+                        <Rating value={8}/>
+                        <Rating value={9}/>
+                        <Rating value={10}/>
+
                         <Text style={styles.aboutCityParagraph}>I've decided to focus on the app logic first (database
                             connection,
                             navigation, etc), so on most pages (as this one) there are placeholders instead of actual

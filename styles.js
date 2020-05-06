@@ -64,11 +64,18 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
 
-    cardRating: {
-        fontSize: 14,
+    ratingContainer: {
         width: 80,
         height: 20,
-        backgroundColor: '#ccc',
+        flexDirection: 'row'
+    },
+
+    ratingStarImage: {
+        height: 18,
+        width: 18,
+        marginVertical: 1,
+        marginHorizontal: 3,
+        resizeMode: "cover",
     },
 
     cardSmall: {

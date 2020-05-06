@@ -12,5 +12,9 @@ export const images = {
     tour_photo_placeholder: require("./Resources/images/tour_photo_placeholder.jpg"),
     splash_screen_icon: require("./Resources/images/splash_screen_icon.png"),
 
-    almaty_silhouette_without_bg: require("./Resources/images/almaty_silhouette_without_bg.png")
+    almaty_silhouette_without_bg: require("./Resources/images/almaty_silhouette_without_bg.png"),
+
+    empty_star: require("./Resources/images/empty_star.png"),
+    half_star: require("./Resources/images/half_star.png"),
+    full_star: require("./Resources/images/full_star.png"),
 };

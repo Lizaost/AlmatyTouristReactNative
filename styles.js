@@ -134,6 +134,8 @@ export const styles = StyleSheet.create({
 
     aboutCityImage: {
         height: 180,
+        width: '100%',
+        resizeMode: "cover",
         // NEXT STYLES ARE ONLY FOR PLACEHOLDER BLOCK
         fontSize: 20,
         backgroundColor: '#ccc',

@@ -54,29 +54,86 @@ export const styles = StyleSheet.create({
     },
 
     cardBigImage: {
-        fontSize: 44,
-        alignContent: 'center',
         height: 240,
-        backgroundColor: '#ccc'
+        // NEXT STYLES ARE ONLY FOR PLACEHOLDER BLOCK
+        fontSize: 20,
+        backgroundColor: '#ccc',
+        textAlign: 'center',
+        justifyContent: 'center',
     },
 
     cardBigFooter: {
         flexDirection: 'row',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
     },
 
     cardRating: {
         fontSize: 14,
         width: 80,
         height: 20,
-        backgroundColor: '#ccc'
+        backgroundColor: '#ccc',
+    },
+
+    cardSmall: {
+      height: 200,
+        padding: 10,
+        marginVertical: 10,
+        backgroundColor: '#ccc',
     },
 
     cardNumberOfItems: {
         fontSize: 14,
         width: 100,
         height: 20,
-        backgroundColor: '#aaa'
+        backgroundColor: '#aaa',
+    },
+
+    startPageSlider: {
+        height: 200,
+        // NEXT STYLES ARE ONLY FOR PLACEHOLDER BLOCK
+        fontSize: 20,
+        backgroundColor: '#aaa',
+        textAlign: 'center',
+        justifyContent: 'center',
+    },
+
+    startPageSection: {
+        marginVertical: 10,
+    },
+
+    startPageSectionHeader: {
+        fontSize: 24,
+        paddingLeft: 16,
+        paddingBottom: 8,
+    },
+
+    startPageSectionSlider: {
+        height: 180,
+        // NEXT STYLES ARE ONLY FOR PLACEHOLDER BLOCK
+        fontSize: 20,
+        backgroundColor: '#ccc',
+        textAlign: 'center',
+        justifyContent: 'center',
+    },
+
+    aboutCityContainer: {
+        paddingHorizontal: 20,
+        paddingBottom: 10,
+        paddingTop: 0
+    },
+
+    aboutCityParagraph: {
+        fontSize: 18,
+        marginVertical: 10,
+    },
+
+    aboutCityImage: {
+        height: 180,
+        // NEXT STYLES ARE ONLY FOR PLACEHOLDER BLOCK
+        fontSize: 20,
+        backgroundColor: '#ccc',
+        textAlign: 'center',
+        justifyContent: 'center',
     }
 });
 

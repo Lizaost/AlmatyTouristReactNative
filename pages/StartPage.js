@@ -18,7 +18,7 @@ export default class StartPage extends Component<Props> {
         selectedItemId: null,
         all_tours: [],
         tours_number: 0,
-        likes: []
+        likes: [],
     };
 
     constructor(props) {
@@ -28,13 +28,13 @@ export default class StartPage extends Component<Props> {
 
     getLikes = async () => {
         try {
-            const value = await AsyncStorage.getItem("likes_list");
-            if(value !== null) {
+            const value = await AsyncStorage.getItem('likes_list');
+            if (value !== null) {
                 // value previously stored
                 this.setState({likes: JSON.parse(value)});
             }
-        } catch(e) {
-            console.log("Error loading likes_list from async storage: \n" + e)
+        } catch (e) {
+            console.log('Error loading likes_list from async storage: \n' + e);
         }
     };
 
@@ -66,16 +66,19 @@ export default class StartPage extends Component<Props> {
     };
 
     _onOpenToursListPressed = () => {
-        this.props.navigation.navigate(
-            'ToursList');
+        this.props.navigation.navigate('ToursList');
     };
+
     _onOpenPlacesListPressed = () => {
-        this.props.navigation.navigate(
-            'PlacesList');
+        this.props.navigation.navigate('PlacesList');
     };
+
     _onOpenFavoritesListPressed = () => {
-        this.props.navigation.navigate(
-            'FavoritesList');
+        this.props.navigation.navigate('FavoritesList');
+    };
+
+    _onOpenAboutCityPagePressed = () => {
+        this.props.navigation.navigate('AboutCity');
     };
 
     render() {
@@ -83,39 +86,78 @@ export default class StartPage extends Component<Props> {
 
         return (
             <ScrollView>
-                <View style={styles.container}>
-                    <Text style={styles.description}>
-                        START PAGE
-                    </Text>
-                    <Text style={styles.description}>
-                        item_string = {JSON.stringify(this.state.all_tours)}
-                    </Text>
-                    <Text style={styles.description}>
-                        ---------------------
-                    </Text>
-                    <Text style={styles.description}>
-                        item_string = {JSON.stringify(this.state.likes)}
-                    </Text>
-                    <Button
-                        onPress={this._onOpenToursListPressed}
-                        color='#48BBEC'
-                        title='Open tours list'
-                    />
-                    <Button
-                        onPress={this._onOpenPlacesListPressed}
-                        color='#48BBEC'
-                        title='Open places list'
-                    />
-                    <Button
-                        onPress={this._onOpenFavoritesListPressed}
-                        color='#48BBEC'
-                        title='Open favorites list'
-                    />
-                    <Button
-                        onPress={this._onTestDatabaseConnectionPressed}
-                        color='#48BBEC'
-                        title='TEST DATABASE CONNECTION'
-                    />
+                <View>
+                    <View style={styles.startPageSlider}>
+                        <Text style={styles.description}>SLIDER WITH INFORMATION ABOUT CITY, RECOMMENDED TOURS AND
+                            PAGES, COVID-19 INFO WILL BE HERE</Text>
+                    </View>
+
+                    <View style={styles.startPageSection}>
+                        <Text style={styles.startPageSectionHeader}>Popular tours</Text>
+                        <View style={styles.startPageSectionSlider}>
+                            <Text style={styles.description}>HORIZONTAL SLIDER (FlatList) WITH POPULAR
+                                TOURS</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.startPageSection}>
+                        <Text style={styles.startPageSectionHeader}>Interesting places</Text>
+                        <View style={styles.startPageSectionSlider}>
+                            <Text style={styles.description}>HORIZONTAL SLIDER (FlatList) WITH INTERESTING
+                                PLACES</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.aboutCityContainer}>
+                        <Text style={styles.aboutCityParagraph}>I've decided to focus on the app logic first (database
+                            connection,
+                            navigation, etc), so on most pages (as this one) there are placeholders instead of actual
+                            blocks
+                            with test or real data. Design of all pages will be finished by the final exam.</Text>
+
+                        <Text style={styles.aboutCityParagraph}>I'm still thinking about main navigation pattern for this app:
+                            tab
+                            bar or hamburger
+                            menu, so there are links to other pages:</Text>
+                        <Text style={styles.description} onPress={this._onOpenToursListPressed}>TOURS LIST</Text>
+                        <Text style={styles.description} onPress={this._onOpenPlacesListPressed}>PLACES LIST</Text>
+                        <Text style={styles.description} onPress={this._onOpenFavoritesListPressed}>FAVORITES
+                            LIST</Text>
+                        <Text style={styles.description} onPress={this._onOpenAboutCityPagePressed}>ABOUT CITY
+                            PAGE</Text>
+                    </View>
+                    {/*<Text style={styles.description}>*/}
+                    {/*    START PAGE*/}
+                    {/*</Text>*/}
+                    {/*<Text style={styles.description}>*/}
+                    {/*    item_string = {JSON.stringify(this.state.all_tours)}*/}
+                    {/*</Text>*/}
+                    {/*<Text style={styles.description}>*/}
+                    {/*    ---------------------*/}
+                    {/*</Text>*/}
+                    {/*<Text style={styles.description}>*/}
+                    {/*    item_string = {JSON.stringify(this.state.likes)}*/}
+                    {/*</Text>*/}
+                    {/*<Button*/}
+                    {/*    onPress={this._onOpenToursListPressed}*/}
+                    {/*    color='#48BBEC'*/}
+                    {/*    title='Open tours list'*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={this._onOpenPlacesListPressed}*/}
+                    {/*    color='#48BBEC'*/}
+                    {/*    title='Open places list'*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={this._onOpenFavoritesListPressed}*/}
+                    {/*    color='#48BBEC'*/}
+                    {/*    title='Open favorites list'*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={this._onTestDatabaseConnectionPressed}*/}
+                    {/*    color='#48BBEC'*/}
+                    {/*    title='TEST DATABASE CONNECTION'*/}
+                    {/*/>*/}
                 </View>
             </ScrollView>
         );

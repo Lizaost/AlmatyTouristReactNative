@@ -1,12 +1,12 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {View, Text, Button, FlatList} from 'react-native';
+import {View, Text, Button, FlatList, TouchableOpacity} from 'react-native';
 import {styles} from '../styles.js';
 import {openDatabase} from 'react-native-sqlite-storage';
 
-import TourCard from "../components/TourCard";
-import getDatabaseConnection from "../db.js";
+import TourCard from '../components/TourCard';
+import getDatabaseConnection from '../db.js';
 
 type Props = {};
 
@@ -26,7 +26,7 @@ export default class ToursList extends Component<Props> {
 
     state = {
         tours: null,
-        isToursListLoaded:false,
+        isToursListLoaded: false,
     };
 
     constructor(props) {
@@ -69,7 +69,7 @@ export default class ToursList extends Component<Props> {
     };
 
     _onOpenTourPressed = (tourId) => {
-        alert(tourId);
+        console.log('Opening tour with id' + tourId);
         this.props.navigation.navigate(
             'TourPage', {tourId: tourId});
     };
@@ -87,11 +87,22 @@ export default class ToursList extends Component<Props> {
                 {/*    color='#48BBEC'*/}
                 {/*    title='Open Tour with id 2'*/}
                 {/*/>*/}
+                {/*{this.state.isToursListLoaded ?*/}
+                {/*    <FlatList*/}
+                {/*        data={this.state.tours}*/}
+                {/*        renderItem={(item) => <TouchableOpacity*/}
+                {/*            onPress={() => alert(JSON.stringify(item['item']))}><Text>{JSON.stringify(item['item'])}</Text></TouchableOpacity>}*/}
+                {/*        keyExtractor={item => item._id}/> :*/}
+                {/*    <Text style={styles.description}>*/}
+                {/*        LOADING*/}
+                {/*    </Text>}*/}
                 {this.state.isToursListLoaded ?
-                <FlatList
-                data = {this.state.tours}
-                renderItem = {(item) => <TourCard item={item["item"]}/>}
-                keyExtractor = {item => item._id}/> : <Text style={styles.description}>
+                    <FlatList
+                        data={this.state.tours}
+                        renderItem={(item) => <TourCard onpressHandler={this._onOpenTourPressed}
+                                                        item={item['item']}/>}
+                        keyExtractor={item => item._id}/> :
+                    <Text style={styles.description}>
                         LOADING
                     </Text>}
             </View>

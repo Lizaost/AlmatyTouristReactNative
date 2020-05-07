@@ -95,6 +95,14 @@ export default class StartPage extends Component<Props> {
                     </View>
 
                     <View style={styles.startPageSection}>
+                        <Text style={styles.startPageSectionHeader}>Just for You</Text>
+                        <View style={styles.startPageSectionSlider}>
+                            <Text style={styles.description}>HORIZONTAL SLIDER (FlatList) WITH RECOMMENDED PLACES AND
+                                TOURS</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.startPageSection}>
                         <Text style={styles.startPageSectionHeader}>Popular tours</Text>
                         <View style={styles.startPageSectionSlider}>
                             <Text style={styles.description}>HORIZONTAL SLIDER (FlatList) WITH POPULAR
@@ -110,68 +118,6 @@ export default class StartPage extends Component<Props> {
                         </View>
                     </View>
 
-                    <View style={styles.aboutCityContainer}>
-                        <Rating value={0}/>
-                        <Rating value={1}/>
-                        <Rating value={2}/>
-                        <Rating value={3}/>
-                        <Rating value={4}/>
-                        <Rating value={5}/>
-                        <Rating value={6}/>
-                        <Rating value={7}/>
-                        <Rating value={8}/>
-                        <Rating value={9}/>
-                        <Rating value={10}/>
-
-                        <Text style={styles.aboutCityParagraph}>I've decided to focus on the app logic first (database
-                            connection,
-                            navigation, etc), so on most pages (as this one) there are placeholders instead of actual
-                            blocks
-                            with test or real data. Design of all pages will be finished by the final exam.</Text>
-
-                        <Text style={styles.aboutCityParagraph}>I'm still thinking about main navigation pattern for this app:
-                            tab
-                            bar or hamburger
-                            menu, so there are links to other pages:</Text>
-                        <Text style={styles.description} onPress={this._onOpenToursListPressed}>TOURS LIST</Text>
-                        <Text style={styles.description} onPress={this._onOpenPlacesListPressed}>PLACES LIST</Text>
-                        <Text style={styles.description} onPress={this._onOpenFavoritesListPressed}>FAVORITES
-                            LIST</Text>
-                        <Text style={styles.description} onPress={this._onOpenAboutCityPagePressed}>ABOUT CITY
-                            PAGE</Text>
-                    </View>
-                    {/*<Text style={styles.description}>*/}
-                    {/*    START PAGE*/}
-                    {/*</Text>*/}
-                    {/*<Text style={styles.description}>*/}
-                    {/*    item_string = {JSON.stringify(this.state.all_tours)}*/}
-                    {/*</Text>*/}
-                    {/*<Text style={styles.description}>*/}
-                    {/*    ---------------------*/}
-                    {/*</Text>*/}
-                    {/*<Text style={styles.description}>*/}
-                    {/*    item_string = {JSON.stringify(this.state.likes)}*/}
-                    {/*</Text>*/}
-                    {/*<Button*/}
-                    {/*    onPress={this._onOpenToursListPressed}*/}
-                    {/*    color='#48BBEC'*/}
-                    {/*    title='Open tours list'*/}
-                    {/*/>*/}
-                    {/*<Button*/}
-                    {/*    onPress={this._onOpenPlacesListPressed}*/}
-                    {/*    color='#48BBEC'*/}
-                    {/*    title='Open places list'*/}
-                    {/*/>*/}
-                    {/*<Button*/}
-                    {/*    onPress={this._onOpenFavoritesListPressed}*/}
-                    {/*    color='#48BBEC'*/}
-                    {/*    title='Open favorites list'*/}
-                    {/*/>*/}
-                    {/*<Button*/}
-                    {/*    onPress={this._onTestDatabaseConnectionPressed}*/}
-                    {/*    color='#48BBEC'*/}
-                    {/*    title='TEST DATABASE CONNECTION'*/}
-                    {/*/>*/}
                 </View>
             </ScrollView>
         );

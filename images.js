@@ -17,4 +17,13 @@ export const images = {
     empty_star: require("./Resources/images/empty_star.png"),
     half_star: require("./Resources/images/half_star.png"),
     full_star: require("./Resources/images/full_star.png"),
+
+    compass: require("./Resources/images/compass.png"),
+    help1: require("./Resources/images/help1.png"),
+    home: require("./Resources/images/home.png"),
+    location: require("./Resources/images/location.png"),
+    road: require("./Resources/images/road.png"),
+    way: require("./Resources/images/way.png"),
+    world: require("./Resources/images/world.png"),
+    settings: require("./Resources/images/settings.png"),
 };

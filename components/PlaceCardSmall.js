@@ -39,14 +39,18 @@ export default class PlaceCard extends React.Component {
             coverImageName = item.cover_image;
         }
         return <TouchableOpacity onPress={() => onpressHandler(item._id)}>
-            <View style={[styles.cardBig, styles.cardWithShadow]}>
-                <Image source={images[coverImageName]} style={styles.cardBigImage}/>
-                <View style={styles.cardBigBody}>
-                    <Text style={styles.cardBigName}>{item.name}</Text>
-                    <Text style={styles.cardBigDescription} numberOfLines={3} ellipsizeMode='tail'>
-                        {item.description}
-                    </Text>
-                    <View style={styles.cardBigFooter}>
+            <View style={[styles.cardSmall, styles.cardWithShadow]}>
+                <View style={styles.cardSmallLeft}>
+                    <Image source={images[coverImageName]} style={styles.cardSmallImage}/>
+                </View>
+                <View style={styles.cardSmallRight}>
+                    <View style={styles.cardSmallBody}>
+                        <Text style={styles.cardSmallName}>{item.name}</Text>
+                        <Text style={styles.cardSmallDescription} numberOfLines={4} ellipsizeMode='tail'>
+                            {item.description}
+                        </Text>
+                    </View>
+                    <View style={styles.cardSmallFooter}>
                         <Rating value={this.state.rating}/>
                     </View>
                 </View>

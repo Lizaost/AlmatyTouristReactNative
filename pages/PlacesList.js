@@ -7,6 +7,7 @@ import {openDatabase} from 'react-native-sqlite-storage';
 import PlaceCard from '../components/PlaceCard';
 import getDatabaseConnection from '../db';
 import TourCard from '../components/TourCard';
+import PlaceCardSmall from '../components/PlaceCardSmall';
 
 type Props = {};
 
@@ -84,7 +85,7 @@ export default class PlacesList extends Component<Props> {
                 {/*/>*/}
                 <FlatList
                     data = {this.state.places}
-                    renderItem = {(item) => <PlaceCard onpressHandler={this._onOpenPlacePressed} item={item["item"]}/>}
+                    renderItem = {(item) => <PlaceCardSmall onpressHandler={this._onOpenPlacePressed} item={item["item"]}/>}
                     keyExtractor = {item => item._id}/>
             </View>
         );

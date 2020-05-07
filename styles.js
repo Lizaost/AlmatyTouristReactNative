@@ -37,10 +37,19 @@ export const styles = StyleSheet.create({
         height: 138,
     },
 
+
+    // BIG CARD
+
     cardBig: {
-        borderColor: 'black',
-        padding: 20,
+        //padding: 20,
         marginBottom: 20,
+        marginHorizontal: 16,
+        backgroundColor: "#fff",
+    },
+
+    cardBigBody: {
+        marginHorizontal: 10,
+        marginBottom: 10,
     },
 
     cardBigName: {
@@ -57,7 +66,7 @@ export const styles = StyleSheet.create({
     cardBigImage: {
         height: 280,
         width: '100%',
-        resizeMode: "cover",
+        resizeMode: 'cover',
     },
 
     cardBigFooter: {
@@ -66,26 +75,78 @@ export const styles = StyleSheet.create({
         marginTop: 5,
     },
 
+    // RATING COMPONENT
+
     ratingContainer: {
-        height: 20,
+        height: 16,
         marginRight: 10,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
 
     ratingStarImage: {
-        height: 18,
-        width: 18,
+        height: 14,
+        width: 14,
         marginVertical: 1,
         marginHorizontal: 3,
-        resizeMode: "cover",
+        resizeMode: 'cover',
     },
 
+    // SMALL CARD
+
     cardSmall: {
-      height: 200,
+        height: 200,
         padding: 10,
         marginVertical: 10,
-        backgroundColor: '#ccc',
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        marginHorizontal: 16,
     },
+
+    cardSmallLeft: {
+        width: '35%',
+    },
+
+    cardSmallRight: {
+        width: '65%',
+        paddingLeft: 10,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+
+    cardSmallBody: {
+        height: 'auto',
+    },
+
+    cardSmallFooter: {
+        height: 20,
+        flexDirection: 'row'
+    },
+
+    cardSmallImage: {
+        height: '100%',
+        width: '100%',
+        resizeMode: 'cover',
+    },
+
+    cardSmallName: {
+        fontSize: 20,
+        marginRight: 40,
+        marginTop: 5,
+    },
+
+    cardSmallDescription: {
+        fontSize: 16,
+        marginRight: 40,
+    },
+
+
+    cardWithShadow: {
+        shadowColor: '#000',
+        shadowOpacity: 0.4,
+        shadowOffset: {width: 0, height: 0},
+        shadowRadius: 2,
+    },
+
 
     cardNumberOfItems: {
         fontSize: 14,
@@ -124,7 +185,7 @@ export const styles = StyleSheet.create({
     aboutCityContainer: {
         paddingHorizontal: 20,
         paddingBottom: 10,
-        paddingTop: 0
+        paddingTop: 0,
     },
 
     aboutCityParagraph: {
@@ -135,12 +196,12 @@ export const styles = StyleSheet.create({
     aboutCityImage: {
         height: 180,
         width: '100%',
-        resizeMode: "cover",
+        resizeMode: 'cover',
         // NEXT STYLES ARE ONLY FOR PLACEHOLDER BLOCK
         fontSize: 20,
         backgroundColor: '#ccc',
         textAlign: 'center',
         justifyContent: 'center',
-    }
+    },
 });
 

@@ -18,11 +18,11 @@ export default class TourCard extends React.Component {
     }
 
     componentDidMount() {
-        this.getPlaceRating();
+        this.getTourRating();
     }
 
-    getPlaceRating = () => {
-        let placeId = this.props.item._id;
+    getTourRating = () => {
+        let tourId = this.props.item._id;
         //TODO realize a server part for comments and ratings and use fetch to get rating
         let rating = 7;
         this.setState({rating: rating});

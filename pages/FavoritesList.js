@@ -11,7 +11,7 @@ type Props = {};
 
 export default class FavoritesList extends Component<Props> {
     static navigationOptions = {
-        title: 'Favorites List',
+        title: 'Favorites',
     };
 
     state = {
@@ -55,10 +55,10 @@ export default class FavoritesList extends Component<Props> {
             this.props.navigation.navigate(
                 'TourPage', {tourId: item.itemId});
         } else {
-            console.log("Unknown item type: " + JSON.stringify(item));
+            alert("Unknown item type: " + JSON.stringify(item));
             alert("Something went wrong");
         }
-    }
+    };
 
     render() {
         console.log('FavoritesList.render');
@@ -66,7 +66,7 @@ export default class FavoritesList extends Component<Props> {
         let favoritesFlatList = this.state.isLoaded ?
             <FlatList
                 data={this.state.favorites}
-                renderItem={(item) => <FavoritesListItem onpressHandler={this._onFavoriteItemPressed} item={item['item']}/>}
+                renderItem={(item) => <FavoritesListItem onpressHandler={() => this._onFavoriteItemPressed(item["item"])} item={item['item']}/>}
                 keyExtractor={item => item.type + item.itemId}/> :
             <Text style={styles.description}>
                 LOADING

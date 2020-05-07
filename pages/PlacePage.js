@@ -40,7 +40,7 @@ export default class PlacePage extends Component<Props> {
                     //console.log('len',len);
                     if (len > 0) {
                         let str = JSON.stringify(results.rows.item(0));
-                        alert(str);
+                        //alert(str);
                         // let temp = [];
                         // for (let i = 0; i < len; ++i) {
                         //     temp.push(results.rows.item(i));

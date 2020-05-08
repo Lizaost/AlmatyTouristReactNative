@@ -1,17 +1,20 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, Image, ScrollView, FlatList} from 'react-native';
 import {styles} from '../styles.js';
 import {openDatabase} from 'react-native-sqlite-storage';
 import getDatabaseConnection from '../db';
 import AsyncStorage from '@react-native-community/async-storage';
+import {images} from '../images';
+import FavoriteButton from '../components/FavoriteButton';
+import PlaceCardSmall from '../components/PlaceCardSmall';
 
 type Props = {};
 
 export default class TourPage extends Component<Props> {
     static navigationOptions = {
-        title: 'Tour Page',
+        title: 'Tour',
     };
 
     constructor(props) {
@@ -20,8 +23,11 @@ export default class TourPage extends Component<Props> {
             selectedPlaceId: null,
             tour: {},
             tourLoaded: false,
+            tourPlaces: [],
+            tourPlacesLoaded: false
         };
         this.loadTour();
+        this.loadTourPlaces();
     }
 
     storeLikes = async (value) => {
@@ -51,7 +57,22 @@ export default class TourPage extends Component<Props> {
             if(value !== null) {
                 // value previously stored
                 let v = JSON.parse(value);
-                v.push(like);
+                let l = v.length;
+                let index = -1;
+                let isAlreadyLiked = false;
+                for (let i = 0; i < l; i++) {
+                    if (v[i].type === "tour" && v[i].itemId === this.state.tour._id) {
+                        index = i;
+                        isAlreadyLiked = true;
+                    }
+                }
+                if (isAlreadyLiked) {
+                    v.splice(index, 1); //remove this like from array if it exists
+                    console.log("Removed like");
+                } else {
+                    v.push(like); //otherwise add like to the array
+                    console.log("Added like");
+                }
                 console.log("ADDING ONE MORE LIKE:\n" + JSON.stringify(v));
                 this.storeLikes(JSON.stringify(v)).then((res) => {console.log("Stored likes")});
                 //this.setState({loadedLikesList: value});
@@ -66,14 +87,18 @@ export default class TourPage extends Component<Props> {
         }
     };
 
-    _onLikeButtonPressed(){
-        //TODO REMOVE DUPLICATES FROM SAVED LIKED ITEMS
-        console.log("Liked place with id " + this.state.tour._id);
-        let like = {time: new Date(),
-            type: "tour",
-            itemId: this.state.tour._id};
-        this.updateLikes(like);
-    }
+    _onOpenPlacePressed = (placeId) => {
+        this.props.navigation.navigate(
+            'PlacePage', {placeId: placeId});
+    };
+
+    // _onLikeButtonPressed(){
+    //     console.log("Liked place with id " + this.state.tour._id);
+    //     let like = {time: new Date(),
+    //         type: "tour",
+    //         itemId: this.state.tour._id};
+    //     this.updateLikes(like);
+    // }
 
     loadTour = () => {
         //let db = openDatabase({name: 'db_en.db', createFromLocation: '~db_en.db'});
@@ -89,7 +114,6 @@ export default class TourPage extends Component<Props> {
                     //console.log('len',len);
                     if (len > 0) {
                         let str = JSON.stringify(results.rows.item(0));
-                        alert(str);
                         // let temp = [];
                         // for (let i = 0; i < len; ++i) {
                         //     temp.push(results.rows.item(i));
@@ -107,26 +131,76 @@ export default class TourPage extends Component<Props> {
         });
     };
 
+    //SELECT p._id, p.name, p.description, p.cover_image, p.address
+    // FROM places p
+    // JOIN tour_places tp
+    // ON p._id=tp.place_id
+    // WHERE tp.tour_id=2
+
+    loadTourPlaces = () => {
+        let db = getDatabaseConnection();
+        const {tourId} = this.props.navigation.state.params;
+        db.transaction(tx => {
+            tx.executeSql(
+                'SELECT p._id, p.name, p.description, p.cover_image, p.address ' +
+                'FROM places p ' +
+                'JOIN tour_places tp ' +
+                'ON p._id=tp.place_id ' +
+                'WHERE tp.tour_id=' + tourId,
+                [],
+                (tx, results) => {
+                    let len = results.rows.length;
+                    this.setState({places_number: len});
+                    //console.log('len',len);
+                    if (len > 0) {
+                        let str = JSON.stringify(results.rows.item(0));
+                        let temp = [];
+                        for (let i = 0; i < len; ++i) {
+                            temp.push(results.rows.item(i));
+                        }
+                        //alert(JSON.stringify(temp));
+                        this.setState({
+                            tourPlaces: temp,
+                            tourPlacesLoaded: true,
+                        });
+                        //alert("*" + this.state.tours[0].name);
+                    } else {
+                        alert('No tour found');
+                    }
+                });
+        });
+    };
+
     render() {
         console.log('TourPage.render');
         const {tourId} = this.props.navigation.state.params;
-        return (
-            <View style={styles.container}>
-                <Text style={styles.description}>
-                    TOUR PAGE
-                </Text>
-                <Text style={styles.description}>
-                    tourId = {tourId}
-                </Text>
-                <Text style={styles.description}>
-                    name = {this.state.tourLoaded ? this.state.tour.name : "LOADING..."}
-                </Text>
-                <Button
-                    onPress={() => this._onLikeButtonPressed()}
-                    color='#48BBEC'
-                    title='LIKE THIS TOUR'
-                />
+        let coverImageName = 'tour';
+        if (this.state.tourLoaded) {
+            if (this.state.tour.cover_image.length > 1 && images.hasOwnProperty(this.state.tour.cover_image)) {
+                coverImageName = this.state.tour.cover_image;
+            }
+        }
+        let pageContents = (<View>
+            <View style={styles.itemPageHeader}>
+                <Image source={images[coverImageName]} style={styles.itemPageCover}/>
             </View>
+            <View style={styles.itemPageBody}>
+                <Text style={styles.itemPageName}>{this.state.tour.name}</Text>
+                <Text style={styles.itemPageDescription}>{this.state.tour.description}</Text>
+                {this.state.tourPlacesLoaded ?
+                    <FlatList
+                        style={styles.tourPlacesList}
+                        data = {this.state.tourPlaces}
+                        renderItem = {(item) => <PlaceCardSmall onpressHandler={() => this._onOpenPlacePressed(item["item"]._id)} item={item["item"]}/>}
+                        keyExtractor = {item => item._id}/> : <View/>}
+            </View>
+            <FavoriteButton style={styles.itemPageFavoriteButton} itemType={"tour"} itemId={tourId}/>
+        </View>);
+
+        return (
+            <ScrollView style={styles.itemPageContainer}>
+                {this.state.tourLoaded ? pageContents : <Text style={styles.loader}>'LOADING...'</Text>}
+            </ScrollView>
         );
     }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Image} from 'react-native';
-import {firebrick} from 'color-name';
 import {images} from '../images';
 import {styles} from '../styles';
 

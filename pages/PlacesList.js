@@ -13,7 +13,7 @@ type Props = {};
 
 export default class PlacesList extends Component<Props> {
     static navigationOptions = {
-        title: 'Places List',
+        title: 'Places',
     };
 
     constructor(props) {
@@ -56,7 +56,6 @@ export default class PlacesList extends Component<Props> {
     };
 
     _onOpenPlacePressed = (placeId) => {
-        alert(placeId);
         this.props.navigation.navigate(
             'PlacePage', {placeId: placeId});
     };

@@ -1,6 +1,7 @@
 'use strict';
 
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from './colors';
 
 let screenWidth = Dimensions.get('window').width;
 
@@ -38,13 +39,20 @@ export const styles = StyleSheet.create({
     },
 
 
+    developerNotes: {
+        fontSize: 14,
+        color: colors.colorSecondaryText,
+        marginVertical: 5,
+    },
+
+
     // BIG CARD
 
     cardBig: {
         //padding: 20,
         marginBottom: 20,
         marginHorizontal: 16,
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
     },
 
     cardBigBody: {
@@ -119,7 +127,7 @@ export const styles = StyleSheet.create({
 
     cardSmallFooter: {
         height: 20,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
 
     cardSmallImage: {
@@ -203,5 +211,85 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'center',
     },
+
+
+    favoriteButton: {
+        width: 40,
+        height: 40,
+        resizeMode: 'cover',
+    },
+
+
+    itemPageHeader: {
+        width: '100%',
+        height: 240,
+        marginBottom: 5,
+    },
+
+    itemPageCover: {
+        width: '100%',
+        height: 240,
+        resizeMode: 'cover',
+    },
+
+    itemPageBody: {
+        marginHorizontal: 20,
+    },
+
+    itemPageName: {
+        fontSize: 20,
+        paddingRight: 40,
+        marginTop: 5,
+    },
+
+    itemPageDescription: {
+        fontSize: 16,
+        marginTop: 5,
+    },
+
+    itemPageInfoSection: {
+        marginVertical: 10,
+    },
+
+    itemPageInfoRow: {
+        flexDirection: 'row',
+        fontSize: 16,
+    },
+
+    itemPageInfoTitle: {
+        flex: 1,
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+
+    itemPageInfoContent: {
+        flex: 3,
+        fontSize: 16,
+    },
+
+    itemPageFavoriteButton: {
+        position: 'absolute',
+        top: 255,
+        right: 15,
+        height: 30,
+        width: 30,
+    },
+
+    itemPageContainer: {
+        position: 'relative',
+    },
+
+    favoriteButtonImage: {
+        position: 'absolute',
+        resizeMode: 'contain',
+        height: 10,
+        width: 10,
+    },
+
+    tourPlacesList: {
+        marginHorizontal: -20,
+        marginVertical: 10,
+    },
+
 });
 

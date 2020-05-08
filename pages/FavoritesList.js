@@ -28,6 +28,11 @@ export default class FavoritesList extends Component<Props> {
             isLoaded: false,
         };
         this.getLikes();
+        // Update likes list when returned back to this page. It will update list if I add/remove an item
+        // from favorites opening item page from this page.
+        this.props.navigation.addListener('willFocus', () => {
+            this.getLikes();
+        });
     }
 
     getLikes = async () => {
@@ -55,8 +60,8 @@ export default class FavoritesList extends Component<Props> {
             this.props.navigation.navigate(
                 'TourPage', {tourId: item.itemId});
         } else {
-            alert("Unknown item type: " + JSON.stringify(item));
-            alert("Something went wrong");
+            alert('Unknown item type: ' + JSON.stringify(item));
+            alert('Something went wrong');
         }
     };
 
@@ -66,7 +71,8 @@ export default class FavoritesList extends Component<Props> {
         let favoritesFlatList = this.state.isLoaded ?
             <FlatList
                 data={this.state.favorites}
-                renderItem={(item) => <FavoritesListItem onpressHandler={() => this._onFavoriteItemPressed(item["item"])} item={item['item']}/>}
+                renderItem={(item) => <FavoritesListItem
+                    onpressHandler={() => this._onFavoriteItemPressed(item['item'])} item={item['item']}/>}
                 keyExtractor={item => item.type + item.itemId}/> :
             <Text style={styles.description}>
                 LOADING

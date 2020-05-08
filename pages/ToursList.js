@@ -22,7 +22,7 @@ type Props = {};
 
 export default class ToursList extends Component<Props> {
     static navigationOptions = {
-        title: 'Tours List',
+        title: 'Tours',
     };
 
     state = {

@@ -13,6 +13,7 @@ export default class TourCard extends React.Component {
         this.state = {
             placesCount: 0,
             rating: 0,
+            ratingLoaded: false
         };
         this.getPlacesNumber(this.props.item._id);
     }
@@ -23,9 +24,24 @@ export default class TourCard extends React.Component {
 
     getTourRating = () => {
         let tourId = this.props.item._id;
-        //TODO realize a server part for comments and ratings and use fetch to get rating
-        let rating = 7;
-        this.setState({rating: rating});
+        let query = 'http://almatytouristbeta.pythonanywhere.com/rating?type=tour&id=' + tourId;
+        fetch(query)
+            .then(response => response.json())
+            .then(json => {
+                console.log('Rating (' + this.props.item.name + '):' + json.rating);
+                this.setState({
+                    rating: json.rating,
+                    ratingLoaded: true
+                });
+                console.log("==== " + this.state.rating);
+            })
+            .catch(error =>
+                this.setState({
+                    isLoading: false,
+                    message: 'Something bad happened ' + error,
+                }));
+        // let rating = 7;
+        // this.setState({rating: rating});
     };
 
     getPlacesNumber = (tourId) => {
@@ -71,7 +87,7 @@ export default class TourCard extends React.Component {
                         </Text>
                     </View>
                     <View style={styles.cardSmallFooter}>
-                        <Rating value={this.state.rating}/>
+                        {this.state.ratingLoaded ? <Rating value={this.state.rating}/> : <Text>LOADING</Text>}
                         <Text
                             style={styles.cardNumberOfItems}>
                             {this.state.placesCount} {this.state.placesCount === 1 ? 'place' : 'places'}

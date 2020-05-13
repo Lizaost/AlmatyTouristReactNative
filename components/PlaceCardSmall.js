@@ -9,12 +9,14 @@ export default class PlaceCard extends React.Component {
 
     state = {
         rating: 0,
+        ratingLoaded: false
     };
 
     constructor(props) {
         super(props);
         this.state = {
             rating: 0,
+            ratingLoaded: false
         };
     }
 
@@ -22,11 +24,28 @@ export default class PlaceCard extends React.Component {
         this.getPlaceRating();
     }
 
-    getPlaceRating = () => {
+    getPlaceRating = async () => {
         let placeId = this.props.item._id;
-        //TODO realize a server part for comments and ratings and use fetch to get rating
-        let rating = 7;
-        this.setState({rating: rating});
+        let query = 'http://almatytouristbeta.pythonanywhere.com/rating?type=place&id=' + placeId;
+        //alert(query);
+        fetch(query)
+            .then(response => response.json())
+            .then(json => {
+                console.log('Rating (' + this.props.item.name + '):' + json.rating);
+                this.setState({
+                    rating: json.rating,
+                    ratingLoaded: true
+                });
+                console.log("==== " + this.state.rating);
+            })
+            .catch(error =>
+                this.setState({
+                    isLoading: false,
+                    message: 'Something bad happened ' + error,
+                }));
+        //let rating = 7;
+        //console.log("***" + this.state.rating);
+        //this.setState({rating: this.state.rating});
     };
 
     render() {
@@ -51,7 +70,8 @@ export default class PlaceCard extends React.Component {
                         </Text>
                     </View>
                     <View style={styles.cardSmallFooter}>
-                        <Rating value={this.state.rating}/>
+                        {this.state.ratingLoaded ? <Rating value={this.state.rating}/> : <Text>LOADING</Text>}
+                        {/*<Rating value={this.state.rating}/>*/}
                     </View>
                 </View>
             </View>

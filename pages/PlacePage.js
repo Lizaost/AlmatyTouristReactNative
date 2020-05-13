@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {View, ScrollView, Text, Button, Image} from 'react-native';
+import {View, ScrollView, Text, Button, Image, FlatList} from 'react-native';
 import {styles} from '../styles.js';
 import {openDatabase} from 'react-native-sqlite-storage';
 import getDatabaseConnection from '../db';
@@ -9,6 +9,9 @@ import getDatabaseConnection from '../db';
 import AsyncStorage from '@react-native-community/async-storage';
 import FavoriteButton from '../components/FavoriteButton';
 import {images} from '../images';
+import CommentPlaceholder from '../components/CommentPlaceholder';
+import Comment from '../components/Comment';
+import PlaceCardSmall from '../components/PlaceCardSmall';
 
 type Props = {};
 
@@ -22,6 +25,8 @@ export default class PlacePage extends Component<Props> {
         place: {},
         placeLoaded: false,
         loadedLikesList: null,
+        commentsLoaded: false,
+        comments: [],
     };
 
     constructor(props) {
@@ -33,6 +38,7 @@ export default class PlacePage extends Component<Props> {
             loadedLikesList: null,
         };
         this.loadPlace();
+        this.loadPlaceComments();
     }
 
     loadPlace = () => {
@@ -66,6 +72,29 @@ export default class PlacePage extends Component<Props> {
                     }
                 });
         });
+    };
+
+    loadPlaceComments = () => {
+        const {placeId} = this.props.navigation.state.params;
+        let query = 'http://almatytouristbeta.pythonanywhere.com/comments?type=place&id=' + placeId;
+        console.log('Query: ' + query);
+        fetch(query)
+            .then(response => response.json())
+            .then(json => {
+                console.log('Comments (place' + placeId + '):' + json[0]['author_name']);
+                this.setState({
+                    comments: json,
+                    commentsLoaded: true,
+                });
+            })
+            .catch(error =>
+                this.setState({
+                    isLoading: false,
+                    commentsLoaded: true,
+                    message: 'Something bad happened ' + error,
+                }));
+        // let rating = 7;
+        // this.setState({rating: rating});
     };
 
     storeLikes = async (value) => {
@@ -167,8 +196,14 @@ export default class PlacePage extends Component<Props> {
                     </View>
                 </View>
 
+                {this.state.commentsLoaded ?
+                    <FlatList
+                        style={styles.tourPlacesList}
+                        data={this.state.comments}
+                        renderItem={(item) => <Comment author={item["item"]['author_name']} rating={item["item"]['rating']}
+                                                       text={item["item"]['text']}/>}/> : <Text>LOADING COMMENTS</Text>}
             </View>
-            <FavoriteButton style={styles.itemPageFavoriteButton} itemType={"place"} itemId={placeId}/>
+            <FavoriteButton style={styles.itemPageFavoriteButton} itemType={'place'} itemId={placeId}/>
         </View>);
 
         return (

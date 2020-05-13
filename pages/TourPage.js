@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {images} from '../images';
 import FavoriteButton from '../components/FavoriteButton';
 import PlaceCardSmall from '../components/PlaceCardSmall';
+import Comment from '../components/Comment';
 
 type Props = {};
 
@@ -24,66 +25,73 @@ export default class TourPage extends Component<Props> {
             tour: {},
             tourLoaded: false,
             tourPlaces: [],
-            tourPlacesLoaded: false
+            tourPlacesLoaded: false,
+            comments: [],
+            commentsLoaded: false,
         };
         this.loadTour();
         this.loadTourPlaces();
+        this.loadTourComments();
     }
 
     storeLikes = async (value) => {
         try {
-            await AsyncStorage.setItem("likes_list", value);
+            await AsyncStorage.setItem('likes_list', value);
         } catch (e) {
-            console.log("Error saving value " + value +" with key likes_list: \n" + e)
+            console.log('Error saving value ' + value + ' with key likes_list: \n' + e);
         }
     };
 
     getLikes = async () => {
         try {
-            const value = await AsyncStorage.getItem("likes_list");
-            if(value !== null) {
+            const value = await AsyncStorage.getItem('likes_list');
+            if (value !== null) {
                 // value previously stored
                 this.setState({loadedLikesList: value});
             }
-        } catch(e) {
-            console.log("Error loading likes_list from async storage: \n" + e)
+        } catch (e) {
+            console.log('Error loading likes_list from async storage: \n' + e);
         }
     };
 
     updateLikes = async (like) => {
         try {
-            console.log("Adding like to async storage " + JSON.stringify(like));
-            const value = await AsyncStorage.getItem("likes_list");
-            if(value !== null) {
+            console.log('Adding like to async storage ' + JSON.stringify(like));
+            const value = await AsyncStorage.getItem('likes_list');
+            if (value !== null) {
                 // value previously stored
                 let v = JSON.parse(value);
                 let l = v.length;
                 let index = -1;
                 let isAlreadyLiked = false;
                 for (let i = 0; i < l; i++) {
-                    if (v[i].type === "tour" && v[i].itemId === this.state.tour._id) {
+                    if (v[i].type === 'tour' && v[i].itemId === this.state.tour._id) {
                         index = i;
                         isAlreadyLiked = true;
                     }
                 }
                 if (isAlreadyLiked) {
                     v.splice(index, 1); //remove this like from array if it exists
-                    console.log("Removed like");
+                    console.log('Removed like');
                 } else {
                     v.push(like); //otherwise add like to the array
-                    console.log("Added like");
+                    console.log('Added like');
                 }
-                console.log("ADDING ONE MORE LIKE:\n" + JSON.stringify(v));
-                this.storeLikes(JSON.stringify(v)).then((res) => {console.log("Stored likes")});
+                console.log('ADDING ONE MORE LIKE:\n' + JSON.stringify(v));
+                this.storeLikes(JSON.stringify(v)).then((res) => {
+                    console.log('Stored likes');
+                });
                 //this.setState({loadedLikesList: value});
             } else {
                 let likesList = [];
                 likesList.push(like);
-                console.log("SAVING FIRST LIKED ITEM:\n" + JSON.stringify(likesList));
-                this.storeLikes(JSON.stringify(likesList)).then((res) => {console.log("Stored likes")});
+                console.log('SAVING FIRST LIKED ITEM:\n' + JSON.stringify(likesList));
+                this.storeLikes(JSON.stringify(likesList)).then((res) => {
+                    console.log('Stored likes');
+                });
             }
-        } catch(e) {
-            console.log("Error loading likes_list from async storage: \n" + e)
+        } catch (e) {
+            console.log('Error loading likes_list from async storage: \n' + e);
         }
     };
 
@@ -171,6 +179,29 @@ export default class TourPage extends Component<Props> {
         });
     };
 
+    loadTourComments = () => {
+        const {tourId} = this.props.navigation.state.params;
+        let query = 'http://almatytouristbeta.pythonanywhere.com/comments?type=tour&id=' + tourId;
+        console.log('Query: ' + query);
+        fetch(query)
+            .then(response => response.json())
+            .then(json => {
+                console.log('Comments (place' + tourId + '):' + json[0]['author_name']);
+                this.setState({
+                    comments: json,
+                    commentsLoaded: true,
+                });
+            })
+            .catch(error =>
+                this.setState({
+                    isLoading: false,
+                    commentsLoaded: true,
+                    message: 'Something bad happened ' + error,
+                }));
+        // let rating = 7;
+        // this.setState({rating: rating});
+    };
+
     render() {
         console.log('TourPage.render');
         const {tourId} = this.props.navigation.state.params;
@@ -190,11 +221,21 @@ export default class TourPage extends Component<Props> {
                 {this.state.tourPlacesLoaded ?
                     <FlatList
                         style={styles.tourPlacesList}
-                        data = {this.state.tourPlaces}
-                        renderItem = {(item) => <PlaceCardSmall onpressHandler={() => this._onOpenPlacePressed(item["item"]._id)} item={item["item"]}/>}
-                        keyExtractor = {item => item._id}/> : <View/>}
+                        data={this.state.tourPlaces}
+                        renderItem={(item) => <PlaceCardSmall
+                            onpressHandler={() => this._onOpenPlacePressed(item['item']._id)} item={item['item']}/>}
+                        keyExtractor={item => item._id}/> : <View/>}
+
+                {this.state.commentsLoaded ?
+                    <FlatList
+                        style={styles.tourPlacesList}
+                        data={this.state.comments}
+                        renderItem={(item) => <Comment author={item['item']['author_name']}
+                                                       rating={item['item']['rating']}
+                                                       text={item['item']['text']}/>}/> : <Text>LOADING COMMENTS</Text>}
+
             </View>
-            <FavoriteButton style={styles.itemPageFavoriteButton} itemType={"tour"} itemId={tourId}/>
+            <FavoriteButton style={styles.itemPageFavoriteButton} itemType={'tour'} itemId={tourId}/>
         </View>);
 
         return (

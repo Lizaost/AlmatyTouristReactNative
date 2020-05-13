@@ -291,5 +291,66 @@ export const styles = StyleSheet.create({
         marginVertical: 10,
     },
 
+    commentHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+
+    commentBody: {
+        flexDirection: 'column'
+    },
+
+    commentPlaceholder: {
+        marginVertical: 10,
+        backgroundColor: colors.grey100,
+    },
+
+    commentPlaceholderBlockA: {
+        height: 30,
+        marginVertical: 10,
+        backgroundColor: colors.grey300,
+    },
+    commentPlaceholderBlockB: {
+        height: 30,
+        marginVertical: 10,
+        backgroundColor: colors.grey400,
+    },
+    commentPlaceholderBlockC: {
+        height: 30,
+        marginVertical: 10,
+        backgroundColor: colors.grey500,
+    },
+
+    commentPlaceholderName: {
+        flex: 4,
+    },
+
+    commentPlaceholderRating: {
+        flex: 1,
+    },
+
+    commentPlaceholderText: {
+        height: 20,
+        marginVertical: 5
+    },
+
+    comment: {
+        marginVertical: 10,
+        marginHorizontal: 20
+    },
+
+    commentName: {
+        fontSize: 20,
+        marginRight: 100
+    },
+
+    commentRating: {
+        marginTop: 5
+    },
+
+    commentText: {
+        fontSize: 16
+    }
+
 });
 

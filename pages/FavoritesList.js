@@ -6,6 +6,7 @@ import {styles} from '../styles.js';
 import AsyncStorage from '@react-native-community/async-storage';
 import TourCard from '../components/TourCard';
 import FavoritesListItem from '../components/FavoritesListItem';
+import CommentPlaceholder from '../components/CommentPlaceholder';
 
 type Props = {};
 

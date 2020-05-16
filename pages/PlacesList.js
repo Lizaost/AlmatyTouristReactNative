@@ -8,6 +8,7 @@ import PlaceCard from '../components/PlaceCard';
 import getDatabaseConnection from '../db';
 import TourCard from '../components/TourCard';
 import PlaceCardSmall from '../components/PlaceCardSmall';
+import TourCardSmall from '../components/TourCardSmall';
 
 type Props = {};
 
@@ -84,7 +85,7 @@ export default class PlacesList extends Component<Props> {
                 {/*/>*/}
                 <FlatList
                     data = {this.state.places}
-                    renderItem = {(item) => <PlaceCardSmall onpressHandler={this._onOpenPlacePressed} item={item["item"]}/>}
+                    renderItem = {(item) => <PlaceCardSmall nav={this.props.navigation} onpressHandler={this._onOpenPlacePressed} item={item["item"]}/>}
                     keyExtractor = {item => item._id}/>
             </View>
         );

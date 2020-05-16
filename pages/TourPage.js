@@ -11,6 +11,7 @@ import FavoriteButton from '../components/FavoriteButton';
 import PlaceCardSmall from '../components/PlaceCardSmall';
 import Comment from '../components/Comment';
 import CommentInput from '../components/CommentInput';
+import TourCardSmall from '../components/TourCardSmall';
 
 type Props = {};
 
@@ -223,13 +224,14 @@ export default class TourPage extends Component<Props> {
                     <FlatList
                         style={styles.tourPlacesList}
                         data={this.state.tourPlaces}
-                        renderItem={(item) => <PlaceCardSmall
-                            onpressHandler={() => this._onOpenPlacePressed(item['item']._id)} item={item['item']}/>}
+                        renderItem={(item) => <PlaceCardSmall nav={this.props.navigation}
+                                                              onpressHandler={() => this._onOpenPlacePressed(item['item']._id)}
+                                                              item={item['item']}/>}
                         keyExtractor={item => item._id}/> : <View/>}
 
                 {this.state.commentsLoaded ?
-                <CommentInput onCommentPostedCallback={() => this.loadTourComments()} item_id={tourId}
-                              item_type={'tour'}/> : <View/>}
+                    <CommentInput onCommentPostedCallback={() => this.loadTourComments()} item_id={tourId}
+                                  item_type={'tour'}/> : <View/>}
 
                 {this.state.commentsLoaded ?
                     <FlatList

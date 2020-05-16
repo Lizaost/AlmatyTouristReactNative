@@ -37,7 +37,6 @@ export default class Comment extends React.Component {
             referrerPolicy: 'no-referrer',
             body: JSON.stringify(comment),
         });
-        alert(JSON.stringify(response));
         this.props.onCommentPostedCallback();
         return response.json(); // parses JSON response into native JavaScript objects
     };

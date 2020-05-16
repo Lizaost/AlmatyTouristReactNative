@@ -3,25 +3,44 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../styles.js';
 import {images} from '../images.js';
 import Rating from '../components/Rating';
+import RatingPlaceholder from './RatingPlaceholder';
 
 
 export default class PlaceCard extends React.Component {
 
     state = {
         rating: 0,
-        ratingLoaded: false
+        ratingLoaded: false,
     };
 
     constructor(props) {
         super(props);
         this.state = {
             rating: 0,
-            ratingLoaded: false
+            ratingLoaded: false,
         };
     }
 
     componentDidMount() {
         this.getPlaceRating();
+        this.focusListener = this.props.nav.addListener(
+            'didFocus',
+            () => {
+                this.setState({
+                    ratingLoaded: false,
+                });
+                this.getPlaceRating();
+                console.log('Reloading place rating for place ' + this.props.item._id);
+            },
+        );
+    }
+
+    componentWillMount(): void {
+        this.getPlaceRating();
+    }
+
+    componentWillUnmount(): void {
+        this.focusListener.remove();
     }
 
     getPlaceRating = async () => {
@@ -34,9 +53,9 @@ export default class PlaceCard extends React.Component {
                 console.log('Rating (' + this.props.item.name + '):' + json.rating);
                 this.setState({
                     rating: json.rating,
-                    ratingLoaded: true
+                    ratingLoaded: true,
                 });
-                console.log("==== " + this.state.rating);
+                console.log('==== ' + this.state.rating);
             })
             .catch(error =>
                 this.setState({
@@ -70,7 +89,7 @@ export default class PlaceCard extends React.Component {
                         </Text>
                     </View>
                     <View style={styles.cardSmallFooter}>
-                        {this.state.ratingLoaded ? <Rating value={this.state.rating}/> : <Text>LOADING</Text>}
+                        {this.state.ratingLoaded ? <Rating value={this.state.rating}/> : <RatingPlaceholder/>}
                         {/*<Rating value={this.state.rating}/>*/}
                     </View>
                 </View>

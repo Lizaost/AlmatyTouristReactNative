@@ -4,6 +4,7 @@ import {styles} from '../styles.js';
 import {images} from '../images.js';
 import getDatabaseConnection from '../db';
 import Rating from './Rating';
+import RatingPlaceholder from './RatingPlaceholder';
 
 
 export default class TourCard extends React.Component {
@@ -13,17 +14,31 @@ export default class TourCard extends React.Component {
         this.state = {
             placesCount: 0,
             rating: 0,
-            ratingLoaded: false
+            ratingLoaded: false,
         };
         this.getPlacesNumber(this.props.item._id);
     }
 
     componentDidMount() {
         this.getTourRating();
+        this.focusListener = this.props.nav.addListener(
+            'didFocus',
+            () => {
+                this.setState({
+                    ratingLoaded: false,
+                });
+                this.getTourRating();
+                console.log('Reloading tour rating for tour ' + this.props.item._id);
+            },
+        );
     }
 
     componentWillMount(): void {
         this.getTourRating();
+    }
+
+    componentWillUnmount(): void {
+        this.focusListener.remove();
     }
 
     getTourRating = () => {
@@ -35,9 +50,9 @@ export default class TourCard extends React.Component {
                 console.log('Rating (' + this.props.item.name + '):' + json.rating);
                 this.setState({
                     rating: json.rating,
-                    ratingLoaded: true
+                    ratingLoaded: true,
                 });
-                console.log("==== " + this.state.rating);
+                console.log('==== ' + this.state.rating);
             })
             .catch(error =>
                 this.setState({
@@ -91,7 +106,7 @@ export default class TourCard extends React.Component {
                         </Text>
                     </View>
                     <View style={styles.cardSmallFooter}>
-                        {this.state.ratingLoaded ? <Rating value={this.state.rating}/> : <Text>LOADING</Text>}
+                        {this.state.ratingLoaded ? <Rating value={this.state.rating}/> : <RatingPlaceholder/>}
                         <Text
                             style={styles.cardNumberOfItems}>
                             {this.state.placesCount} {this.state.placesCount === 1 ? 'place' : 'places'}

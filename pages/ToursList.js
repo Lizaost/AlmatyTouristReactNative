@@ -114,7 +114,7 @@ export default class ToursList extends Component<Props> {
                 {this.state.isToursListLoaded ?
                     <FlatList
                         data={this.state.tours}
-                        renderItem={(item) => <TourCardSmall onpressHandler={this._onOpenTourPressed}
+                        renderItem={(item) => <TourCardSmall nav={this.props.navigation} onpressHandler={this._onOpenTourPressed}
                                                         item={item['item']} rerender={this.state.renderAgain}/>}
                         keyExtractor={item => item._id}/> :
                     <Text style={styles.description}>

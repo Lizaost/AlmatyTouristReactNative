@@ -50,7 +50,7 @@ const startPageStack = createStackNavigator({
         },
         headerTintColor: colors.colorTextAndIcons,
         title: 'Almaty Tourist',
-        //Header title
+        gestureEnabled: true,
     },
 });
 
@@ -62,13 +62,12 @@ const toursListStack = createStackNavigator({
 }, {
     initialRouteName: 'ToursList',
     defaultNavigationOptions: {
-        //Header customization of the perticular Screen
         headerStyle: {
             backgroundColor: colors.colorPrimaryDark,
         },
         headerTintColor: colors.colorTextAndIcons,
         title: 'Tours',
-        //Header title
+        gestureEnabled: true,
     },
 });
 
@@ -78,13 +77,12 @@ const placesListStack = createStackNavigator({
 }, {
     initialRouteName: 'PlacesList',
     defaultNavigationOptions: {
-        //Header customization of the perticular Screen
         headerStyle: {
             backgroundColor: colors.colorPrimaryDark,
         },
         headerTintColor: colors.colorTextAndIcons,
         title: 'Places',
-        //Header title
+        gestureEnabled: true,
     },
 });
 
@@ -95,13 +93,12 @@ const favoritesListStack = createStackNavigator({
 }, {
     initialRouteName: 'FavoritesList',
     defaultNavigationOptions: {
-        //Header customization of the perticular Screen
         headerStyle: {
             backgroundColor: colors.colorPrimaryDark,
         },
         headerTintColor: colors.colorTextAndIcons,
         title: 'Favorites',
-        //Header title
+        gestureEnabled: true,
     },
 });
 
@@ -110,19 +107,17 @@ const otherListStack = createStackNavigator({
 }, {
     initialRouteName: 'AboutCity',
     defaultNavigationOptions: {
-        //Header customization of the perticular Screen
         headerStyle: {
             backgroundColor: colors.colorPrimaryDark,
         },
         headerTintColor: colors.colorTextAndIcons,
         title: 'Other',
-        //Header title
+        gestureEnabled: true,
     },
 });
 
 const TabNavigator = createBottomTabNavigator(
     {
-        //Defination of Navigaton bottom options
         Home: {screen: startPageStack},
         Tours: {screen: toursListStack},
         Places: {screen: placesListStack},

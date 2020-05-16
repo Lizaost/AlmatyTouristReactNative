@@ -99,6 +99,22 @@ export const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
 
+    // RATING INPUT COMPONENT
+
+    ratingInputContainer: {
+        height: 22,
+        marginRight: 10,
+        flexDirection: 'row',
+    },
+
+    ratingInputStarImage: {
+        height: 20,
+        width: 20,
+        marginVertical: 1,
+        marginHorizontal: 4,
+        resizeMode: 'cover',
+    },
+
     // SMALL CARD
 
     cardSmall: {
@@ -335,22 +351,72 @@ export const styles = StyleSheet.create({
     },
 
     comment: {
+        borderWidth: 1,
+        borderColor: colors.grey300,
+        backgroundColor: colors.grey200,
+        shadowColor: '#000',
+        shadowOpacity: 0.4,
+        shadowOffset: {width: 0, height: 0},
+        shadowRadius: 2,
+        borderRadius: 2,
+        padding: 8,
         marginVertical: 10,
         marginHorizontal: 20
     },
 
     commentName: {
         fontSize: 20,
-        marginRight: 100
+        marginRight: 100,
     },
 
     commentRating: {
-        marginTop: 5
+        marginTop: 5,
     },
 
     commentText: {
-        fontSize: 16
-    }
+        fontSize: 16,
+    },
+
+    input: {
+        borderWidth: 1,
+        borderColor: colors.grey500,
+        borderRadius: 5,
+    },
+
+    commentInput: {
+        marginVertical: 10,
+        marginHorizontal: 0,
+        padding: 4,
+    },
+
+    commentAuthorNameInput:{
+        fontSize: 16,
+        paddingLeft: 8
+    },
+
+    commentTextInput:{
+        fontSize: 16,
+        height: 100,
+        textAlignVertical: 'top',
+        paddingLeft: 8
+    },
+
+    commentInputFooter: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+
+    commentRatingInput: {
+        flex: 3,
+    },
+
+    commentSendButton: {
+        flex: 1,
+    },
+
+    commentRow: {
+        marginVertical: 8
+    },
 
 });
 

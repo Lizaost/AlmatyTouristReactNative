@@ -12,6 +12,7 @@ import {images} from '../images';
 import CommentPlaceholder from '../components/CommentPlaceholder';
 import Comment from '../components/Comment';
 import PlaceCardSmall from '../components/PlaceCardSmall';
+import CommentInput from '../components/CommentInput';
 
 type Props = {};
 
@@ -197,11 +198,16 @@ export default class PlacePage extends Component<Props> {
                 </View>
 
                 {this.state.commentsLoaded ?
+                    <CommentInput onCommentPostedCallback={() => this.loadPlaceComments()} item_id={placeId}
+                                  item_type={'place'}/> : <View/>}
+
+                {this.state.commentsLoaded ?
                     <FlatList
                         style={styles.tourPlacesList}
                         data={this.state.comments}
-                        renderItem={(item) => <Comment author={item["item"]['author_name']} rating={item["item"]['rating']}
-                                                       text={item["item"]['text']}/>}/> : <Text>LOADING COMMENTS</Text>}
+                        renderItem={(item) => <Comment author={item['item']['author_name']}
+                                                       rating={item['item']['rating']}
+                                                       text={item['item']['text']}/>}/> : <Text>LOADING COMMENTS</Text>}
             </View>
             <FavoriteButton style={styles.itemPageFavoriteButton} itemType={'place'} itemId={placeId}/>
         </View>);

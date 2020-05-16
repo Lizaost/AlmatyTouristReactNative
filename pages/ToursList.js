@@ -8,6 +8,7 @@ import {openDatabase} from 'react-native-sqlite-storage';
 import TourCard from '../components/TourCard';
 import getDatabaseConnection from '../db.js';
 import TourCardSmall from '../components/TourCardSmall';
+import {NavigationEvents} from 'react-navigation';
 
 type Props = {};
 
@@ -36,6 +37,18 @@ export default class ToursList extends Component<Props> {
             tours: null,
         };
         this.loadTours();
+    }
+
+    componentDidMount(): void {
+        this.focusListener = this.props.navigation.addListener(
+            'didFocus',
+            () => {
+                this.setState({renderAgain: true}); this.loadTours(); console.log("The page will be reloaded soon")}
+        )
+    }
+
+    componentWillUnmount(): void {
+        this.focusListener.remove();
     }
 
     loadTours = () => {
@@ -97,11 +110,12 @@ export default class ToursList extends Component<Props> {
                 {/*    <Text style={styles.description}>*/}
                 {/*        LOADING*/}
                 {/*    </Text>}*/}
+                <NavigationEvents onWillFocus={() => this.loadTours()}/>
                 {this.state.isToursListLoaded ?
                     <FlatList
                         data={this.state.tours}
                         renderItem={(item) => <TourCardSmall onpressHandler={this._onOpenTourPressed}
-                                                        item={item['item']}/>}
+                                                        item={item['item']} rerender={this.state.renderAgain}/>}
                         keyExtractor={item => item._id}/> :
                     <Text style={styles.description}>
                         LOADING

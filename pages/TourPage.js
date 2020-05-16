@@ -10,6 +10,7 @@ import {images} from '../images';
 import FavoriteButton from '../components/FavoriteButton';
 import PlaceCardSmall from '../components/PlaceCardSmall';
 import Comment from '../components/Comment';
+import CommentInput from '../components/CommentInput';
 
 type Props = {};
 
@@ -225,6 +226,10 @@ export default class TourPage extends Component<Props> {
                         renderItem={(item) => <PlaceCardSmall
                             onpressHandler={() => this._onOpenPlacePressed(item['item']._id)} item={item['item']}/>}
                         keyExtractor={item => item._id}/> : <View/>}
+
+                {this.state.commentsLoaded ?
+                <CommentInput onCommentPostedCallback={() => this.loadTourComments()} item_id={tourId}
+                              item_type={'tour'}/> : <View/>}
 
                 {this.state.commentsLoaded ?
                     <FlatList

@@ -22,6 +22,10 @@ export default class TourCard extends React.Component {
         this.getTourRating();
     }
 
+    componentWillMount(): void {
+        this.getTourRating();
+    }
+
     getTourRating = () => {
         let tourId = this.props.item._id;
         let query = 'http://almatytouristbeta.pythonanywhere.com/rating?type=tour&id=' + tourId;

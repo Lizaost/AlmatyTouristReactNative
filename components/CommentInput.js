@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, Button, TextInput} from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import {styles} from '../styles.js';
 import Rating from './Rating';
 import RatingInput from './RatingInput';
@@ -47,7 +48,7 @@ export default class Comment extends React.Component {
     };
 
     _onPostCommentButtonClicked = () => {
-        let author_id = 'TEST_DEVICE_ID'; //replace with real device id
+        let author_id = DeviceInfo.getUniqueId();
         let comment = {
             'author': author_id,
             'author_name': this.state.authorName,

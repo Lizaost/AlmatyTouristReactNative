@@ -26,4 +26,7 @@ export const images = {
     way: require("./Resources/images/way.png"),
     world: require("./Resources/images/world.png"),
     settings: require("./Resources/images/settings.png"),
+
+    covid19_slide: require("./Resources/images/covid19_slider_image.png"),
+    welcome_slide: require("./Resources/images/welcome_slider_image.png"),
 };

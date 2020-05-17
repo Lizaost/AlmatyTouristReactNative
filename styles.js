@@ -179,12 +179,13 @@ export const styles = StyleSheet.create({
     },
 
     startPageSlider: {
-        height: 200,
+        //height: 200,
         // NEXT STYLES ARE ONLY FOR PLACEHOLDER BLOCK
         fontSize: 20,
         backgroundColor: '#aaa',
         textAlign: 'center',
         justifyContent: 'center',
+        paddingVertical: 0
     },
 
     startPageSection: {
@@ -423,6 +424,19 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         width: '90%',
         marginLeft: '5%',
+    },
+
+    startPageTopSliderSlide: {
+        // height: 250,
+        // marginLeft: 25,
+        // marginRight: 25,
+    },
+
+    startPageTopSliderImage: {
+        width: '100%',
+        height: 240,
+        // height: 350,
+        resizeMode: 'cover',
     }
 
 });

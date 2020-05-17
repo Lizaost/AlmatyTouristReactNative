@@ -5,8 +5,9 @@ import {View, ScrollView, Text} from 'react-native';
 import {styles} from '../styles.js';
 import {openDatabase} from 'react-native-sqlite-storage';
 import AsyncStorage from '@react-native-community/async-storage';
+import {TestCarousel} from '../components/TestCarousel';
+import {StartPageTopSlider} from '../components/StartPageTopSlider';
 
-import Rating from '../components/Rating';
 
 type Props = {};
 
@@ -85,14 +86,17 @@ export default class StartPage extends Component<Props> {
 
     render() {
         console.log('StartPage.render');
-
         return (
             <ScrollView>
                 <View>
                     <View style={styles.startPageSlider}>
-                        <Text style={styles.description}>SLIDER WITH INFORMATION ABOUT CITY, RECOMMENDED TOURS AND
-                            PAGES, COVID-19 INFO WILL BE HERE</Text>
+                        {/*<Text style={styles.description}>SLIDER WITH INFORMATION ABOUT CITY, RECOMMENDED TOURS AND*/}
+                        {/*    PAGES, COVID-19 INFO WILL BE HERE</Text>*/}
+
                     </View>
+                    <StartPageTopSlider/>
+
+
 
                     <View style={styles.startPageSection}>
                         <Text style={styles.startPageSectionHeader}>Just for You</Text>

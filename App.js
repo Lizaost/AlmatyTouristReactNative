@@ -46,7 +46,6 @@ const startPageStack = createStackNavigator({
 }, {
     initialRouteName: 'Home',
     defaultNavigationOptions: {
-        //Header customization of the perticular Screen
         headerStyle: {
             backgroundColor: colors.colorPrimaryDark,
         },

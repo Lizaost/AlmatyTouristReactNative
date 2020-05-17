@@ -7,6 +7,9 @@ import {openDatabase} from 'react-native-sqlite-storage';
 import AsyncStorage from '@react-native-community/async-storage';
 import {TestCarousel} from '../components/TestCarousel';
 import {StartPageTopSlider} from '../components/StartPageTopSlider';
+import {PopularToursSlider} from '../components/PopularToursSlider';
+import {InterestingPlacesSlider} from '../components/InterestingPlacesSlider';
+import {RecommendationsSlider} from '../components/RecommendationsSlider';
 
 
 type Props = {};
@@ -100,26 +103,17 @@ export default class StartPage extends Component<Props> {
 
                     <View style={styles.startPageSection}>
                         <Text style={styles.startPageSectionHeader}>Just for You</Text>
-                        <View style={styles.startPageSectionSlider}>
-                            <Text style={styles.description}>HORIZONTAL SLIDER (FlatList) WITH RECOMMENDED PLACES AND
-                                TOURS</Text>
-                        </View>
+                        <RecommendationsSlider nav={this.props.navigation}/>
                     </View>
 
                     <View style={styles.startPageSection}>
                         <Text style={styles.startPageSectionHeader}>Popular tours</Text>
-                        <View style={styles.startPageSectionSlider}>
-                            <Text style={styles.description}>HORIZONTAL SLIDER (FlatList) WITH POPULAR
-                                TOURS</Text>
-                        </View>
+                        <PopularToursSlider nav={this.props.navigation}/>
                     </View>
 
                     <View style={styles.startPageSection}>
                         <Text style={styles.startPageSectionHeader}>Interesting places</Text>
-                        <View style={styles.startPageSectionSlider}>
-                            <Text style={styles.description}>HORIZONTAL SLIDER (FlatList) WITH INTERESTING
-                                PLACES</Text>
-                        </View>
+                        <InterestingPlacesSlider nav={this.props.navigation}/>
                     </View>
 
                 </View>

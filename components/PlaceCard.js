@@ -3,30 +3,68 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../styles.js';
 import {images} from '../images.js';
 import Rating from '../components/Rating';
+import RatingPlaceholder from './RatingPlaceholder';
 
 
 export default class PlaceCard extends React.Component {
 
     state = {
         rating: 0,
+        ratingLoaded: false,
     };
 
     constructor(props) {
         super(props);
         this.state = {
             rating: 0,
+            ratingLoaded: false,
         };
     }
 
     componentDidMount() {
         this.getPlaceRating();
+        this.focusListener = this.props.nav.addListener(
+            'didFocus',
+            () => {
+                this.setState({
+                    ratingLoaded: false,
+                });
+                this.getPlaceRating();
+                console.log('Reloading place rating for place ' + this.props.item._id);
+            },
+        );
     }
 
-    getPlaceRating = () => {
+    componentWillMount(): void {
+        this.getPlaceRating();
+    }
+
+    componentWillUnmount(): void {
+        this.focusListener.remove();
+    }
+
+    getPlaceRating = async () => {
         let placeId = this.props.item._id;
-        //TODO realize a server part for comments and ratings and use fetch to get rating
-        let rating = 7;
-        this.setState({rating: rating});
+        let query = 'http://almatytouristbeta.pythonanywhere.com/rating?type=place&id=' + placeId;
+        //alert(query);
+        fetch(query)
+            .then(response => response.json())
+            .then(json => {
+                console.log('Rating (' + this.props.item.name + '):' + json.rating);
+                this.setState({
+                    rating: json.rating,
+                    ratingLoaded: true,
+                });
+                console.log('==== ' + this.state.rating);
+            })
+            .catch(error =>
+                this.setState({
+                    isLoading: false,
+                    message: 'Something bad happened ' + error,
+                }));
+        //let rating = 7;
+        //console.log("***" + this.state.rating);
+        //this.setState({rating: this.state.rating});
     };
 
     render() {

@@ -4,6 +4,7 @@ import {styles} from '../styles.js';
 import {images} from '../images.js';
 import getDatabaseConnection from '../db';
 import Rating from './Rating';
+import RatingPlaceholder from './RatingPlaceholder';
 
 
 export default class TourCard extends React.Component {
@@ -13,19 +14,53 @@ export default class TourCard extends React.Component {
         this.state = {
             placesCount: 0,
             rating: 0,
+            ratingLoaded: false,
         };
         this.getPlacesNumber(this.props.item._id);
     }
 
     componentDidMount() {
-        this.getPlaceRating();
+        this.getTourRating();
+        this.focusListener = this.props.nav.addListener(
+            'didFocus',
+            () => {
+                this.setState({
+                    ratingLoaded: false,
+                });
+                this.getTourRating();
+                console.log('Reloading tour rating for tour ' + this.props.item._id);
+            },
+        );
     }
 
-    getPlaceRating = () => {
-        let placeId = this.props.item._id;
-        //TODO realize a server part for comments and ratings and use fetch to get rating
-        let rating = 7;
-        this.setState({rating: rating});
+    componentWillMount(): void {
+        this.getTourRating();
+    }
+
+    componentWillUnmount(): void {
+        this.focusListener.remove();
+    }
+
+    getTourRating = () => {
+        let tourId = this.props.item._id;
+        let query = 'http://almatytouristbeta.pythonanywhere.com/rating?type=tour&id=' + tourId;
+        fetch(query)
+            .then(response => response.json())
+            .then(json => {
+                console.log('Rating (' + this.props.item.name + '):' + json.rating);
+                this.setState({
+                    rating: json.rating,
+                    ratingLoaded: true,
+                });
+                console.log('==== ' + this.state.rating);
+            })
+            .catch(error =>
+                this.setState({
+                    isLoading: false,
+                    message: 'Something bad happened ' + error,
+                }));
+        // let rating = 7;
+        // this.setState({rating: rating});
     };
 
     getPlacesNumber = (tourId) => {
@@ -50,6 +85,7 @@ export default class TourCard extends React.Component {
                 });
         });
     };
+
 
     render() {
         let onpressHandler = this.props.onpressHandler;

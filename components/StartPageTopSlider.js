@@ -3,6 +3,7 @@ import {View, ScrollView, Text, Image, Dimensions, TouchableNativeFeedback} from
 import Carousel from 'react-native-snap-carousel';
 import {images} from '../images';
 import {styles} from '../styles';
+import Pagination from 'react-native-snap-carousel/src/pagination/Pagination';
 
 export class StartPageTopSlider extends Component {
 
@@ -43,6 +44,9 @@ export class StartPageTopSlider extends Component {
                     renderItem={this._renderItem}
                     sliderWidth={screenWidth}
                     itemWidth={screenWidth}
+                    // loop={true}
+                    // autoplay={true}
+                    // autoplayInterval={4000}
                 />
             </View>
         );

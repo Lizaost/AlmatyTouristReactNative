@@ -94,7 +94,7 @@ export default class StartPage extends Component<Props> {
                         {/*    PAGES, COVID-19 INFO WILL BE HERE</Text>*/}
 
                     </View>
-                    <StartPageTopSlider/>
+                    <StartPageTopSlider nav={this.props.navigation}/>
 
 
 

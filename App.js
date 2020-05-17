@@ -16,6 +16,7 @@ import PlacesList from './pages/PlacesList';
 import PlacePage from './pages/PlacePage';
 import AboutCityPage from './pages/AboutCityPage';
 import FavoritesList from './pages/FavoritesList';
+import Covid19InfoPage from './pages/Covid19InfoPage';
 
 
 // const instructions = Platform.select({ ... });
@@ -41,6 +42,7 @@ const startPageStack = createStackNavigator({
     TourPage: {screen: TourPage},
     PlacePage: {screen: PlacePage},
     AboutCity: {screen: AboutCityPage},
+    Covid19: {screen: Covid19InfoPage},
 }, {
     initialRouteName: 'Home',
     defaultNavigationOptions: {

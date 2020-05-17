@@ -15,7 +15,10 @@ export default class Comment extends React.Component {
             rating: 0,
             itemId: this.props.item_id,
             itemType: this.props.item_type,
+            isItemCommented: false,
+            isItemCommentedChecked: false,
         };
+        this.testIfItemIsCommented();
     }
 
     // Comment structure on the server:
@@ -42,6 +45,26 @@ export default class Comment extends React.Component {
         return response.json(); // parses JSON response into native JavaScript objects
     };
 
+    testIfItemIsCommented = () => {
+        let query = 'http://almatytouristbeta.pythonanywhere.com/is_commented?author=' + DeviceInfo.getUniqueId() +
+            '&item_type=' + this.state.itemType + '&item_id=' + this.state.itemId;
+        console.log(query);
+        fetch(query)
+            .then(response => response.json())
+            .then(json => {
+                console.log('IsCommented (' + this.state.itemType + this.state.itemId + '):' + json.is_commented);
+                this.setState({
+                    isItemCommented: json.is_commented,
+                    isItemCommentedChecked: true,
+                });
+            })
+            .catch(error =>
+                this.setState({
+                    isLoading: false,
+                    message: 'Something bad happened ' + error,
+                }));
+    };
+
     _handleButtonClick = () => {
         this.postComment({author: 'test_author_id_string'})
             .then((json) => alert(JSON.stringify(json)));
@@ -58,7 +81,10 @@ export default class Comment extends React.Component {
             'item_id': this.state.itemId,
         };
         this.postComment(comment)
-            .then((json) => console.log('Posted comment:\n' + JSON.stringify(json) + '\n' + json.keys));
+            .then((json) => {
+                this.testIfItemIsCommented();
+                console.log('Posted comment:\n' + JSON.stringify(json) + '\n' + json.keys);
+            });
     };
 
     _handleCommentTextChange = (text) => {
@@ -76,22 +102,31 @@ export default class Comment extends React.Component {
 
 
     render() {
-        return (<View style={styles.commentInput}>
-            <TextInput
-                style={[styles.input, styles.commentRow, styles.commentAuthorNameInput]}
-                placeholder="Name"
-                onChangeText={this._handleCommentAuthorChange}
-            />
-            <TextInput
-                style={[styles.input, styles.commentRow, styles.commentTextInput]}
-                placeholder="What do you think?"
-                onChangeText={this._handleCommentTextChange}
-                multiline
-            />
-            <View style={[styles.commentInputFooter, styles.commentRow]}>
-                <RatingInput style={styles.commentRatingInput} ratingSetCallback={this.ratingSetCallbackFunction}/>
-                <Button style={styles.commentSendButton} onPress={() => this._onPostCommentButtonClicked()} title={'SEND'}/>
+        let content = this.state.isItemCommentedChecked ? (!this.state.isItemCommented ?
+            <View>
+                <TextInput
+                    style={[styles.input, styles.commentRow, styles.commentAuthorNameInput]}
+                    placeholder="Name"
+                    onChangeText={this._handleCommentAuthorChange}
+                />
+                <TextInput
+                    style={[styles.input, styles.commentRow, styles.commentTextInput]}
+                    placeholder="What do you think?"
+                    onChangeText={this._handleCommentTextChange}
+                    multiline
+                />
+                <View style={[styles.commentInputFooter, styles.commentRow]}>
+                    <RatingInput style={styles.commentRatingInput} ratingSetCallback={this.ratingSetCallbackFunction}/>
+                    <Button style={styles.commentSendButton} onPress={() => this._onPostCommentButtonClicked()}
+                            title={'SEND'}/>
+                </View>
             </View>
+            : <Text style={styles.itemAlreadyCommentedMessage}>You have already reviewed this item. Only one review from
+                user is allowed.</Text>)
+            : <View/>;
+
+        return (<View style={styles.commentInput}>
+            {content}
         </View>);
     }
 }

@@ -418,5 +418,12 @@ export const styles = StyleSheet.create({
         marginVertical: 8
     },
 
+    itemAlreadyCommentedMessage: {
+        fontSize: 14,
+        textAlign: 'center',
+        width: '90%',
+        marginLeft: '5%',
+    }
+
 });
 

@@ -35,6 +35,11 @@ export default class OtherLinksPage extends Component<Props> {
             'FAQ');
     };
 
+    _onTermsAndConditionsPressed = () => {
+        this.props.navigation.navigate(
+            'TermsAndConditions');
+    };
+
     _onContactUsPressed = () => {
         console.log('Opening mail app with a mail to developers email address');
     };
@@ -45,14 +50,6 @@ export default class OtherLinksPage extends Component<Props> {
             <View style={styles.otherLinksPageWrapper}>
                 <View style={styles.otherLinksPageLinksWrapper}>
 
-                    <TouchableNativeFeedback onPress={this._onAboutCityPressed}>
-                        <View style={styles.otherLink}>
-                            <Text style={styles.otherLinkTitle}>
-                                About Almaty
-                            </Text>
-                        </View>
-                    </TouchableNativeFeedback>
-
                     <TouchableNativeFeedback onPress={this._onFAQPressed}>
                         <View style={styles.otherLink}>
                             <Text style={styles.otherLinkTitle}>
@@ -61,10 +58,26 @@ export default class OtherLinksPage extends Component<Props> {
                         </View>
                     </TouchableNativeFeedback>
 
+                    <TouchableNativeFeedback onPress={this._onAboutCityPressed}>
+                        <View style={styles.otherLink}>
+                            <Text style={styles.otherLinkTitle}>
+                                About Almaty
+                            </Text>
+                        </View>
+                    </TouchableNativeFeedback>
+
                     <TouchableNativeFeedback onPress={this._onCovid19InfoPressed}>
                         <View style={styles.otherLink}>
                             <Text style={styles.otherLinkTitle}>
                                 COVID-19 Info
+                            </Text>
+                        </View>
+                    </TouchableNativeFeedback>
+
+                    <TouchableNativeFeedback onPress={this._onTermsAndConditionsPressed}>
+                        <View style={styles.otherLink}>
+                            <Text style={styles.otherLinkTitle}>
+                                Terms&Conditions
                             </Text>
                         </View>
                     </TouchableNativeFeedback>

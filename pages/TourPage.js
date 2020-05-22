@@ -17,8 +17,18 @@ import Rating from '../components/Rating';
 type Props = {};
 
 export default class TourPage extends Component<Props> {
-    static navigationOptions = {
-        title: 'Tour',
+    // static navigationOptions = {
+    //     title: 'Tour',
+    // };
+
+    static navigationOptions = ({navigation}) => ({
+        title: typeof (navigation.state.params) === 'undefined'
+        || typeof (navigation.state.params.title) === 'undefined' ? 'Loading...' : navigation.state.params.title,
+    });
+
+    setPageTitle = (title) => {
+        this.props.navigation.setParams({title: title});
+        console.log('Setting page title to ' + title);
     };
 
     constructor(props) {
@@ -156,10 +166,12 @@ export default class TourPage extends Component<Props> {
                         //     temp.push(results.rows.item(i));
                         // }
                         // //alert(JSON.stringify(temp));
+                        let tour = results.rows.item(0);
                         this.setState({
                             tour: results.rows.item(0),
                             tourLoaded: true,
                         });
+                        this.setPageTitle(tour.name);
                         //alert("*" + this.state.tours[0].name);
                     } else {
                         alert('No tour found');

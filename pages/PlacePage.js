@@ -18,8 +18,19 @@ import Rating from '../components/Rating';
 type Props = {};
 
 export default class PlacePage extends Component<Props> {
-    static navigationOptions = {
-        title: 'Place',
+    // static navigationOptions = {
+    //     title: 'Place',
+    // };
+
+    static navigationOptions = ({navigation}) => ({
+        title: typeof (navigation.state.params) === 'undefined'
+        || typeof (navigation.state.params.title) === 'undefined' ? 'Loading...' : navigation.state.params.title,
+    });
+
+
+    setPageTitle = (title) => {
+        this.props.navigation.setParams({title: title});
+        console.log('Setting page title to ' + title);
     };
 
     state = {
@@ -72,11 +83,13 @@ export default class PlacePage extends Component<Props> {
                         //     temp.push(results.rows.item(i));
                         // }
                         // //alert(JSON.stringify(temp));
+                        let place = results.rows.item(0);
                         this.setState({
                             place: results.rows.item(0),
                             placeLoaded: true,
                         });
                         console.log('Loaded place\n' + JSON.stringify(results.rows.item(0)));
+                        this.setPageTitle(place.name);
                         //alert("*" + this.state.tours[0].name);
                     } else {
                         alert('No place found');
@@ -196,7 +209,7 @@ export default class PlacePage extends Component<Props> {
     getPlaceRating = () => {
         const {placeId} = this.props.navigation.state.params;
         let query = 'http://almatytouristbeta.pythonanywhere.com/rating_exact?type=place&id=' + placeId;
-        console.log("Getting place (id=" + placeId + ") rating. URL is " + query);
+        console.log('Getting place (id=' + placeId + ') rating. URL is ' + query);
         fetch(query)
             .then(response => response.json())
             .then(json => {
@@ -244,7 +257,8 @@ export default class PlacePage extends Component<Props> {
                 {this.state.commentsLoaded ? <View style={styles.ItemPageRatingRow}>
                     <Rating value={Math.round(this.state.rating)} style={styles.ItemPageRating}/>
                     <Text style={styles.ItemPageRatingValue}>{(this.state.rating).toFixed(2)}</Text>
-                    <Text style={styles.ItemPageCommentsNumber}>{this.state.commentsNumber} {this.state.commentsNumber===1 ? "comment" : "comments"}</Text>
+                    <Text
+                        style={styles.ItemPageCommentsNumber}>{this.state.commentsNumber} {this.state.commentsNumber === 1 ? 'comment' : 'comments'}</Text>
                 </View> : <View/>}
 
                 {this.state.commentsLoaded ?

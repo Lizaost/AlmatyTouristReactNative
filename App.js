@@ -17,6 +17,8 @@ import PlacePage from './pages/PlacePage';
 import AboutCityPage from './pages/AboutCityPage';
 import FavoritesList from './pages/FavoritesList';
 import Covid19InfoPage from './pages/Covid19InfoPage';
+import FAQPage from './pages/FAQPage';
+import OtherLinksPage from './pages/OtherLinksPage';
 
 
 // const instructions = Platform.select({ ... });
@@ -104,9 +106,12 @@ const favoritesListStack = createStackNavigator({
 });
 
 const otherListStack = createStackNavigator({
+    OtherLinks: {screen: OtherLinksPage},
     AboutCity: {screen: AboutCityPage},
+    Covid19: {screen: Covid19InfoPage},
+    FAQ: {screen: FAQPage},
 }, {
-    initialRouteName: 'AboutCity',
+    initialRouteName: 'OtherLinks',
     defaultNavigationOptions: {
         headerStyle: {
             backgroundColor: colors.colorPrimaryDark,

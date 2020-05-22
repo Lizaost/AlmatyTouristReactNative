@@ -437,6 +437,53 @@ export const styles = StyleSheet.create({
         height: 240,
         // height: 350,
         resizeMode: 'cover',
+    },
+
+
+
+    FAQSectionBlock: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+    },
+
+    FAQQuestion: {
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+
+    FAQAnswer: {
+        fontSize: 16,
+        fontWeight: 'normal'
+    },
+
+
+    otherLink: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderBottomColor: colors.colorDivider,
+        borderBottomWidth: 1
+    },
+
+    otherLinkTitle: {
+        fontSize: 16
+    },
+
+    otherLinksPageCitySilhouette: {
+        width: '100%',
+        height: 200,
+        resizeMode: 'cover',
+        opacity: 0.85,
+        flex: 1
+    },
+
+    otherLinksPageWrapper: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '100%'
+    },
+
+    otherLinksPageLinksWrapper: {
+        flex: 1
     }
 
 });

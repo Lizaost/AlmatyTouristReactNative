@@ -7,9 +7,9 @@ import {images} from '../images';
 
 type Props = {};
 
-export default class Covid19InfoPage extends Component<Props> {
+export default class TermsAndConditionsPage extends Component<Props> {
     static navigationOptions = {
-        title: 'COVID-19 Information',
+        title: 'Terms and Conditions',
     };
 
     constructor(props) {
@@ -20,15 +20,13 @@ export default class Covid19InfoPage extends Component<Props> {
     }
 
     render() {
-        console.log('Covid19Page.render');
+        console.log('TermsAndConditionsPage.render');
         return (
             <ScrollView>
                 <View style={styles.aboutCityContainer}>
 
-                    <Image source={images['covid19_slide']} style={styles.aboutCityImage}/>
-
                     <Text style={styles.aboutCityParagraph}>
-                        There will be soe information about COVID-19, quarantine and recommendations.
+                        Terms and Conditions
                     </Text>
 
 

@@ -5,7 +5,6 @@ import {View, ScrollView, Text} from 'react-native';
 import {styles} from '../styles.js';
 import {openDatabase} from 'react-native-sqlite-storage';
 import AsyncStorage from '@react-native-community/async-storage';
-import {TestCarousel} from '../components/TestCarousel';
 import {StartPageTopSlider} from '../components/StartPageTopSlider';
 import {PopularToursSlider} from '../components/PopularToursSlider';
 import {InterestingPlacesSlider} from '../components/InterestingPlacesSlider';

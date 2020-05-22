@@ -8,6 +8,7 @@ import TourCard from './TourCard';
 import getDatabaseConnection from '../db';
 import TourCardSmall from './TourCardSmall';
 import PlaceCard from './PlaceCard';
+import CardPlaceholder from './CardPlaceholder';
 
 export class RecommendationsSlider extends Component {
 
@@ -122,7 +123,7 @@ export class RecommendationsSlider extends Component {
 
     render() {
         let screenWidth = Dimensions.get('window').width;
-        return (
+        return   this.state.itemsLoaded ?
             <View style={{
                 flex: 1,
                 flexDirection: 'row',
@@ -142,7 +143,7 @@ export class RecommendationsSlider extends Component {
                     layout={'default'}
                     layoutCardOffset={'18'}
                 />
-            </View>
-        );
+            </View> :
+            <CardPlaceholder/>;
     }
 }

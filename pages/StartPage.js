@@ -9,6 +9,8 @@ import {StartPageTopSlider} from '../components/StartPageTopSlider';
 import {PopularToursSlider} from '../components/PopularToursSlider';
 import {InterestingPlacesSlider} from '../components/InterestingPlacesSlider';
 import {RecommendationsSlider} from '../components/RecommendationsSlider';
+import CardPlaceholder from "../components/CardPlaceholder";
+import CardContainer from 'react-navigation-stack/src/vendor/views/Stack/CardContainer';
 
 
 type Props = {};

@@ -83,6 +83,35 @@ export const styles = StyleSheet.create({
         marginTop: 5,
     },
 
+    //BIG CARD PLACEHOLDER
+
+    cardBigImagePlaceholder: {
+        height: 280,
+        width: '100%',
+        backgroundColor: colors.grey300,
+        marginBottom: 10,
+    },
+
+    cardBigNamePlaceholder: {
+        height: 28,
+        width: 280,
+        backgroundColor: colors.grey300,
+        marginBottom: 10,
+    },
+
+    cardBigDescriptionPlaceholder: {
+        height: 80,
+        width: '100%',
+        backgroundColor: colors.grey300,
+        marginBottom: 10,
+    },
+
+    cardBigFooterPlaceholder: {
+        height: 20,
+        width: 160,
+        backgroundColor: colors.grey300,
+    },
+
     // RATING COMPONENT
 
     ratingContainer: {

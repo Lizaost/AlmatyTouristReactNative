@@ -274,11 +274,15 @@ export default class PlacePage extends Component<Props> {
                                                        text={item['item']['text']}/>}/> : <Text>LOADING COMMENTS</Text>}
             </View>
             <FavoriteButton style={styles.itemPageFavoriteButton} itemType={'place'} itemId={placeId}/>
+            <View style={[styles.placePageGoButton, {width: 50}]}>
+                <Button title={'GO'}
+                        onPress={this._openMapWithPlaceAddress}/>
+            </View>
         </View>);
 
         return (
             <ScrollView style={styles.itemPageContainer}>
-                {this.state.placeLoaded ? pageContents : <Text style={styles.loader}>'LOADING...'</Text>}
+                {this.state.placeLoaded ? pageContents : <Text style={styles.loader}>LOADING...</Text>}
             </ScrollView>
         );
     }

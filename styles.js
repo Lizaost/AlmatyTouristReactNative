@@ -284,13 +284,13 @@ export const styles = StyleSheet.create({
 
     itemPageName: {
         fontSize: 20,
-        paddingRight: 40,
-        marginTop: 5,
+        paddingRight: 70,
+        marginTop: 10,
     },
 
     itemPageDescription: {
         fontSize: 16,
-        marginTop: 5,
+        marginTop: 10,
     },
 
     itemPageInfoSection: {
@@ -319,6 +319,14 @@ export const styles = StyleSheet.create({
         right: 15,
         height: 30,
         width: 30,
+    },
+
+    placePageGoButton: {
+        position: 'absolute',
+        top: 252,
+        right: 55,
+        height: 30,
+        width: 25,
     },
 
     itemPageContainer: {

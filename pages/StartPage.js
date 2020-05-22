@@ -2,14 +2,17 @@
 
 import React, {Component} from 'react';
 import {View, ScrollView, Text} from 'react-native';
+import * as RNLocalize from 'react-native-localize';
+import i18n from 'i18n-js';
+import {translate, setI18nConfig} from '../localization';
 import {styles} from '../styles.js';
-import {openDatabase} from 'react-native-sqlite-storage';
+import openDatabase from 'react-native-sqlite-storage';
 import AsyncStorage from '@react-native-community/async-storage';
 import {StartPageTopSlider} from '../components/StartPageTopSlider';
 import {PopularToursSlider} from '../components/PopularToursSlider';
 import {InterestingPlacesSlider} from '../components/InterestingPlacesSlider';
 import {RecommendationsSlider} from '../components/RecommendationsSlider';
-import CardPlaceholder from "../components/CardPlaceholder";
+import CardPlaceholder from '../components/CardPlaceholder';
 import CardContainer from 'react-navigation-stack/src/vendor/views/Stack/CardContainer';
 
 
@@ -30,8 +33,25 @@ export default class StartPage extends Component<Props> {
 
     constructor(props) {
         super(props);
+        setI18nConfig();
         this.getLikes();
     }
+
+    componentDidMount() {
+        RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    }
+
+    componentWillUnmount() {
+        RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    }
+
+    handleLocalizationChange = () => {
+        setI18nConfig()
+            .then(() => this.forceUpdate())
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
     getLikes = async () => {
         try {
@@ -90,6 +110,7 @@ export default class StartPage extends Component<Props> {
 
     render() {
         console.log('StartPage.render');
+        console.log(i18n.translations);
         return (
             <ScrollView>
                 <View>
@@ -101,19 +122,20 @@ export default class StartPage extends Component<Props> {
                     <StartPageTopSlider nav={this.props.navigation}/>
 
 
-
                     <View style={styles.startPageSection}>
-                        <Text style={styles.startPageSectionHeader}>Just for You</Text>
+                        <Text style={styles.startPageSectionHeader}>
+                            {translate('start-page_recommendation-title')}
+                        </Text>
                         <RecommendationsSlider nav={this.props.navigation}/>
                     </View>
 
                     <View style={styles.startPageSection}>
-                        <Text style={styles.startPageSectionHeader}>Popular tours</Text>
+                        <Text style={styles.startPageSectionHeader}>{translate('start-page_tours-title')}</Text>
                         <PopularToursSlider nav={this.props.navigation}/>
                     </View>
 
                     <View style={styles.startPageSection}>
-                        <Text style={styles.startPageSectionHeader}>Interesting places</Text>
+                        <Text style={styles.startPageSectionHeader}>{translate('start-page_places-title')}</Text>
                         <InterestingPlacesSlider nav={this.props.navigation}/>
                     </View>
 

@@ -12,6 +12,7 @@ import PlaceCardSmall from '../components/PlaceCardSmall';
 import Comment from '../components/Comment';
 import CommentInput from '../components/CommentInput';
 import TourCardSmall from '../components/TourCardSmall';
+import Rating from '../components/Rating';
 
 type Props = {};
 
@@ -30,10 +31,13 @@ export default class TourPage extends Component<Props> {
             tourPlacesLoaded: false,
             comments: [],
             commentsLoaded: false,
+            rating: 0,
+            ratingLoaded: false,
         };
         this.loadTour();
         this.loadTourPlaces();
         this.loadTourComments();
+        this.getTourRating();
     }
 
     storeLikes = async (value) => {
@@ -54,6 +58,29 @@ export default class TourPage extends Component<Props> {
         } catch (e) {
             console.log('Error loading likes_list from async storage: \n' + e);
         }
+    };
+
+    getTourRating = () => {
+        const {tourId} = this.props.navigation.state.params;
+        let query = 'http://almatytouristbeta.pythonanywhere.com/rating_exact?type=tour&id=' + tourId;
+        console.log('Getting tour (id=' + tourId + ') rating. URL is ' + query);
+        fetch(query)
+            .then(response => response.json())
+            .then(json => {
+                console.log('Rating (tour' + tourId + '):' + json.rating);
+                this.setState({
+                    rating: json.rating,
+                    ratingLoaded: true,
+                });
+                console.log('==== ' + this.state.rating);
+            })
+            .catch(error =>
+                this.setState({
+                    isLoading: false,
+                    message: 'Something bad happened ' + error,
+                }));
+        // let rating = 7;
+        // this.setState({rating: rating});
     };
 
     updateLikes = async (like) => {
@@ -191,6 +218,7 @@ export default class TourPage extends Component<Props> {
                 console.log('Comments (place' + tourId + '):' + json[0]['author_name']);
                 this.setState({
                     comments: json,
+                    commentsNumber: json.length,
                     commentsLoaded: true,
                 });
             })
@@ -228,6 +256,14 @@ export default class TourPage extends Component<Props> {
                                                               onpressHandler={() => this._onOpenPlacePressed(item['item']._id)}
                                                               item={item['item']}/>}
                         keyExtractor={item => item._id}/> : <View/>}
+
+                {this.state.commentsLoaded ?
+                    <View style={styles.ItemPageRatingRow}>
+                        <Rating value={Math.round(this.state.rating)} style={styles.ItemPageRating}/>
+                        <Text style={styles.ItemPageRatingValue}>{(this.state.rating).toFixed(2)}</Text>
+                        <Text
+                            style={styles.ItemPageCommentsNumber}>{this.state.commentsNumber} {this.state.commentsNumber === 1 ? 'comment' : 'comments'}</Text>
+                    </View> : <View/>}
 
                 {this.state.commentsLoaded ?
                     <CommentInput onCommentPostedCallback={() => this.loadTourComments()} item_id={tourId}

@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {View, ScrollView, Text, Button, Image, FlatList} from 'react-native';
+import {View, ScrollView, Text, Button, Image, FlatList, TouchableNativeFeedback, Linking} from 'react-native';
 import {styles} from '../styles.js';
 import {openDatabase} from 'react-native-sqlite-storage';
 import getDatabaseConnection from '../db';
@@ -13,6 +13,7 @@ import CommentPlaceholder from '../components/CommentPlaceholder';
 import Comment from '../components/Comment';
 import PlaceCardSmall from '../components/PlaceCardSmall';
 import CommentInput from '../components/CommentInput';
+import Rating from '../components/Rating';
 
 type Props = {};
 
@@ -27,7 +28,10 @@ export default class PlacePage extends Component<Props> {
         placeLoaded: false,
         loadedLikesList: null,
         commentsLoaded: false,
+        commentsNumber: 0,
         comments: [],
+        rating: 0,
+        ratingLoaded: false,
     };
 
     constructor(props) {
@@ -37,9 +41,15 @@ export default class PlacePage extends Component<Props> {
             place: {},
             placeLoaded: false,
             loadedLikesList: null,
+            commentsLoaded: false,
+            commentsNumber: 0,
+            comments: [],
+            rating: 0,
+            ratingLoaded: false,
         };
         this.loadPlace();
         this.loadPlaceComments();
+        this.getPlaceRating();
     }
 
     loadPlace = () => {
@@ -85,6 +95,7 @@ export default class PlacePage extends Component<Props> {
                 console.log('Comments (place' + placeId + '):' + json[0]['author_name']);
                 this.setState({
                     comments: json,
+                    commentsNumber: json.length,
                     commentsLoaded: true,
                 });
             })
@@ -174,6 +185,37 @@ export default class PlacePage extends Component<Props> {
         this.updateLikes(like);
     }
 
+    _openMapWithPlaceAddress = () => {
+        if (this.state.placeLoaded) {
+            let placeName = this.state.place.name;
+            placeName.replace(' ', '+');
+            Linking.openURL('https://www.google.com/maps/search/?api=1&query=' + placeName);
+        }
+    };
+
+    getPlaceRating = () => {
+        const {placeId} = this.props.navigation.state.params;
+        let query = 'http://almatytouristbeta.pythonanywhere.com/rating_exact?type=place&id=' + placeId;
+        console.log("Getting place (id=" + placeId + ") rating. URL is " + query);
+        fetch(query)
+            .then(response => response.json())
+            .then(json => {
+                console.log('Rating (place' + placeId + '):' + json.rating);
+                this.setState({
+                    rating: json.rating,
+                    ratingLoaded: true,
+                });
+                console.log('==== ' + this.state.rating);
+            })
+            .catch(error =>
+                this.setState({
+                    isLoading: false,
+                    message: 'Something bad happened ' + error,
+                }));
+        // let rating = 7;
+        // this.setState({rating: rating});
+    };
+
     render() {
         console.log('PlacePage.render');
         const {placeId} = this.props.navigation.state.params;
@@ -191,11 +233,19 @@ export default class PlacePage extends Component<Props> {
                 <Text style={styles.itemPageName}>{this.state.place.name}</Text>
                 <Text style={styles.itemPageDescription}>{this.state.place.description}</Text>
                 <View style={styles.itemPageInfoSection}>
-                    <View style={styles.itemPageInfoRow}>
-                        <Text style={styles.itemPageInfoTitle}>Address</Text>
-                        <Text style={styles.itemPageInfoContent}>{this.state.place.address}</Text>
-                    </View>
+                    <TouchableNativeFeedback onPress={this._openMapWithPlaceAddress}>
+                        <View style={styles.itemPageInfoRow}>
+                            <Text style={styles.itemPageInfoTitle}>Address</Text>
+                            <Text style={styles.itemPageInfoContent}>{this.state.place.address}</Text>
+                        </View>
+                    </TouchableNativeFeedback>
                 </View>
+
+                {this.state.commentsLoaded ? <View style={styles.ItemPageRatingRow}>
+                    <Rating value={Math.round(this.state.rating)} style={styles.ItemPageRating}/>
+                    <Text style={styles.ItemPageRatingValue}>{(this.state.rating).toFixed(2)}</Text>
+                    <Text style={styles.ItemPageCommentsNumber}>{this.state.commentsNumber} {this.state.commentsNumber===1 ? "comment" : "comments"}</Text>
+                </View> : <View/>}
 
                 {this.state.commentsLoaded ?
                     <CommentInput onCommentPostedCallback={() => this.loadPlaceComments()} item_id={placeId}

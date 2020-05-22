@@ -426,6 +426,28 @@ export const styles = StyleSheet.create({
         marginLeft: '5%',
     },
 
+    ItemPageRatingRow:{
+        marginVertical: 10,
+        flexDirection: 'row',
+    },
+
+    ItemPageRating: {
+        marginRight: -5,
+    },
+
+    ItemPageRatingValue: {
+        fontSize: 16,
+        marginTop: -3,
+        marginRight: 15,
+    },
+
+    ItemPageCommentsNumber: {
+        fontSize: 16,
+        marginTop: -3
+    },
+
+
+
     startPageTopSliderSlide: {
         // height: 250,
         // marginLeft: 25,

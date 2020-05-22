@@ -73,7 +73,9 @@ export default class FavoritesList extends Component<Props> {
             <FlatList
                 data={this.state.favorites}
                 renderItem={(item) => <FavoritesListItem
-                    onpressHandler={() => this._onFavoriteItemPressed(item['item'])} item={item['item']}/>}
+                    onpressHandler={() => this._onFavoriteItemPressed(item['item'])}
+                    item={item['item']}
+                    nav={this.props.navigation}/>}
                 keyExtractor={item => item.type + item.itemId}/> :
             <Text style={styles.description}>
                 LOADING

@@ -114,9 +114,9 @@ export default class FavoritesListItem extends React.Component {
             + item.itemId;
         let itemComponent = type === 'tour' ?
             <TourCardSmall onpressHandler={onpressHandler}
-                                                             item={this.state.item}/> :
+                           item={this.state.item} nav={this.props.nav}/> :
             <PlaceCardSmall onpressHandler={onpressHandler}
-                            item={this.state.item}/>;
+                            item={this.state.item} nav={this.props.nav}/>;
         return <TouchableOpacity onPress={() => onpressHandler(item)}>
             {itemComponent}
         </TouchableOpacity>;

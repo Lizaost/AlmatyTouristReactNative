@@ -278,7 +278,10 @@ export default class TourPage extends Component<Props> {
                     </View> : <View/>}
 
                 {this.state.commentsLoaded ?
-                    <CommentInput onCommentPostedCallback={() => this.loadTourComments()} item_id={tourId}
+                    <CommentInput onCommentPostedCallback={() => {
+                        this.loadTourComments();
+                        this.getTourRating();
+                    }} item_id={tourId}
                                   item_type={'tour'}/> : <View/>}
 
                 {this.state.commentsLoaded ?

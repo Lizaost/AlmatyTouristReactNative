@@ -18,6 +18,7 @@ import AboutCityPage from './pages/AboutCityPage';
 import FavoritesList from './pages/FavoritesList';
 import Covid19InfoPage from './pages/Covid19InfoPage';
 import FAQPage from './pages/FAQPage';
+import TermsAndConditionsPage from "./pages/TermsAndConditionsPage"
 import OtherLinksPage from './pages/OtherLinksPage';
 
 
@@ -109,6 +110,7 @@ const otherListStack = createStackNavigator({
     OtherLinks: {screen: OtherLinksPage},
     AboutCity: {screen: AboutCityPage},
     Covid19: {screen: Covid19InfoPage},
+    TermsAndConditions: {screen: TermsAndConditionsPage},
     FAQ: {screen: FAQPage},
 }, {
     initialRouteName: 'OtherLinks',

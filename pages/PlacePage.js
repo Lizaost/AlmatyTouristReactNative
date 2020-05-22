@@ -262,7 +262,10 @@ export default class PlacePage extends Component<Props> {
                 </View> : <View/>}
 
                 {this.state.commentsLoaded ?
-                    <CommentInput onCommentPostedCallback={() => this.loadPlaceComments()} item_id={placeId}
+                    <CommentInput onCommentPostedCallback={() => {
+                        this.loadPlaceComments();
+                        this.getPlaceRating();
+                    }} item_id={placeId}
                                   item_type={'place'}/> : <View/>}
 
                 {this.state.commentsLoaded ?

@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {View, Text, ScrollView, TouchableNativeFeedback, Image} from 'react-native';
+import {View, Text, ScrollView, TouchableNativeFeedback, Image, Linking} from 'react-native';
 import {styles} from '../styles.js';
 import {images} from '../images';
 
@@ -42,6 +42,7 @@ export default class OtherLinksPage extends Component<Props> {
 
     _onContactUsPressed = () => {
         console.log('Opening mail app with a mail to developers email address');
+        Linking.openURL('mailto:support@almatytourist.kz?subject=Almaty+Tourist+App+Question');
     };
 
     render() {

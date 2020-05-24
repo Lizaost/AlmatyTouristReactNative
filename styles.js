@@ -71,13 +71,13 @@ export const styles = StyleSheet.create({
     },
 
     cardBigName: {
-        fontSize: 24,
+        fontSize: 20,
         marginRight: 40,
         marginTop: 5,
     },
 
     cardBigDescription: {
-        fontSize: 18,
+        fontSize: 16,
         marginRight: 40,
     },
 

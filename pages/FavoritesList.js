@@ -109,7 +109,7 @@ export default class FavoritesList extends Component<Props> {
                     nav={this.props.navigation}/>}
                 keyExtractor={item => item.type + item.itemId}/> :
             <Text style={styles.description}>
-                LOADING
+                {translate('list-loading')}
             </Text>;
         return (
             <View>

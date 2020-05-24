@@ -50,14 +50,24 @@ export const styles = StyleSheet.create({
 
     cardBig: {
         //padding: 20,
-        marginBottom: 20,
-        marginHorizontal: 16,
+        height: '100%',
+        //marginBottom: 20,
+        //marginHorizontal: 16,
         backgroundColor: '#fff',
+        flexDirection: 'column',
     },
 
     cardBigBody: {
         marginHorizontal: 10,
         marginBottom: 10,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        flex: 1,
+        height: '100%',
+    },
+
+    cardBigTextContent: {
+        flex: 1,
     },
 
     cardBigName: {
@@ -72,15 +82,17 @@ export const styles = StyleSheet.create({
     },
 
     cardBigImage: {
-        height: 280,
+        height: 200,
         width: '100%',
         resizeMode: 'cover',
     },
 
     cardBigFooter: {
+        height: 20,
         flexDirection: 'row',
         alignItems: 'flex-start',
         marginTop: 5,
+        //flex: 1,
     },
 
     //BIG CARD PLACEHOLDER
@@ -214,7 +226,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#aaa',
         textAlign: 'center',
         justifyContent: 'center',
-        paddingVertical: 0
+        paddingVertical: 0,
     },
 
     startPageSection: {
@@ -347,11 +359,11 @@ export const styles = StyleSheet.create({
 
     commentHeader: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
 
     commentBody: {
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
 
     commentPlaceholder: {
@@ -385,7 +397,7 @@ export const styles = StyleSheet.create({
 
     commentPlaceholderText: {
         height: 20,
-        marginVertical: 5
+        marginVertical: 5,
     },
 
     comment: {
@@ -399,7 +411,7 @@ export const styles = StyleSheet.create({
         borderRadius: 2,
         padding: 8,
         marginVertical: 10,
-        marginHorizontal: 20
+        marginHorizontal: 20,
     },
 
     commentName: {
@@ -427,16 +439,16 @@ export const styles = StyleSheet.create({
         padding: 4,
     },
 
-    commentAuthorNameInput:{
+    commentAuthorNameInput: {
         fontSize: 16,
-        paddingLeft: 8
+        paddingLeft: 8,
     },
 
-    commentTextInput:{
+    commentTextInput: {
         fontSize: 16,
         height: 100,
         textAlignVertical: 'top',
-        paddingLeft: 8
+        paddingLeft: 8,
     },
 
     commentInputFooter: {
@@ -453,7 +465,7 @@ export const styles = StyleSheet.create({
     },
 
     commentRow: {
-        marginVertical: 8
+        marginVertical: 8,
     },
 
     itemAlreadyCommentedMessage: {
@@ -463,7 +475,7 @@ export const styles = StyleSheet.create({
         marginLeft: '5%',
     },
 
-    ItemPageRatingRow:{
+    ItemPageRatingRow: {
         marginVertical: 10,
         flexDirection: 'row',
     },
@@ -480,9 +492,8 @@ export const styles = StyleSheet.create({
 
     ItemPageCommentsNumber: {
         fontSize: 16,
-        marginTop: -3
+        marginTop: -3,
     },
-
 
 
     startPageTopSliderSlide: {
@@ -499,7 +510,6 @@ export const styles = StyleSheet.create({
     },
 
 
-
     FAQSectionBlock: {
         paddingHorizontal: 20,
         paddingVertical: 10,
@@ -507,12 +517,12 @@ export const styles = StyleSheet.create({
 
     FAQQuestion: {
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
 
     FAQAnswer: {
         fontSize: 16,
-        fontWeight: 'normal'
+        fontWeight: 'normal',
     },
 
 
@@ -520,11 +530,11 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderBottomColor: colors.colorDivider,
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
     },
 
     otherLinkTitle: {
-        fontSize: 16
+        fontSize: 16,
     },
 
     otherLinksPageCitySilhouette: {
@@ -532,18 +542,18 @@ export const styles = StyleSheet.create({
         height: 200,
         resizeMode: 'cover',
         opacity: 0.85,
-        flex: 1
+        flex: 1,
     },
 
     otherLinksPageWrapper: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: '100%'
+        height: '100%',
     },
 
     otherLinksPageLinksWrapper: {
-        flex: 1
-    }
+        flex: 1,
+    },
 
 });
 

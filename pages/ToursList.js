@@ -9,6 +9,7 @@ import TourCard from '../components/TourCard';
 import getDatabaseConnection from '../db.js';
 import TourCardSmall from '../components/TourCardSmall';
 import {NavigationEvents} from 'react-navigation';
+import ToursFilterDropdown from '../components/ToursFilterDropdown';
 
 type Props = {};
 
@@ -29,13 +30,14 @@ export default class ToursList extends Component<Props> {
     state = {
         tours: null,
         isToursListLoaded: false,
+        sorting: "name ASC"
     };
 
     constructor(props) {
         super(props);
-        this.state = {
-            tours: null,
-        };
+        // this.state = {
+        //     tours: null,
+        // };
         this.loadTours();
     }
 
@@ -111,6 +113,10 @@ export default class ToursList extends Component<Props> {
                 {/*        LOADING*/}
                 {/*    </Text>}*/}
                 <NavigationEvents onWillFocus={() => this.loadTours()}/>
+                <View style={styles.listFilterRow}>
+                    <ToursFilterDropdown itemSelectHandle = {(itemValue) => {this.setState({sorting: itemValue})}}/>
+                    <Text>{this.state.sorting}</Text>
+            </View>
                 {this.state.isToursListLoaded ?
                     <FlatList
                         data={this.state.tours}

@@ -80,10 +80,12 @@ export default class PlaceCard extends React.Component {
             <View style={[styles.cardBig, styles.cardWithShadow]}>
                 <Image source={images[coverImageName]} style={styles.cardBigImage}/>
                 <View style={styles.cardBigBody}>
-                    <Text style={styles.cardBigName}>{item.name}</Text>
-                    <Text style={styles.cardBigDescription} numberOfLines={3} ellipsizeMode='tail'>
-                        {item.description}
-                    </Text>
+                    <View style={styles.cardBigTextContent}>
+                        <Text style={styles.cardBigName}>{item.name}</Text>
+                        <Text style={styles.cardBigDescription} numberOfLines={3} ellipsizeMode='tail'>
+                            {item.description}
+                        </Text>
+                    </View>
                     <View style={styles.cardBigFooter}>
                         <Rating value={this.state.rating}/>
                     </View>

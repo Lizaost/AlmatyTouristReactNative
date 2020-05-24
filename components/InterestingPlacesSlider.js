@@ -89,26 +89,26 @@ export class InterestingPlacesSlider extends Component {
     render() {
         let screenWidth = Dimensions.get('window').width;
         return this.state.placesLoaded ?
-                    <View style={{
-                        flex: 1,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        marginVertical: 0,
-                        paddingVertical: 0,
-                        marginBottom: -20,
-                    }}>
-                        <Carousel
-                            ref={(c) => {
-                                this._carousel = c;
-                            }}
-                            data={this.state.places}
-                            renderItem={this._renderItem}
-                            sliderWidth={screenWidth}
-                            itemWidth={screenWidth}
-                            layout={'default'}
-                            layoutCardOffset={'18'}
-                        />
-                    </View> :
-                    <CardPlaceholder/>;
+            <View style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginVertical: 0,
+                paddingVertical: 0,
+                //marginBottom: -20,
+            }}>
+                <Carousel
+                    ref={(c) => {
+                        this._carousel = c;
+                    }}
+                    data={this.state.places}
+                    renderItem={this._renderItem}
+                    sliderWidth={screenWidth}
+                    itemWidth={screenWidth*0.8}
+                    layout={'default'}
+                    layoutCardOffset={'0'}
+                />
+            </View> :
+            <CardPlaceholder/>;
     }
 }

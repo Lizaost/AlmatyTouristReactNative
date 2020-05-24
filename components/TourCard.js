@@ -99,10 +99,12 @@ export default class TourCard extends React.Component {
                 {/*<View style={styles.cardBigImage}><Text style={styles.description}>IMAGE ({item.cover_image})</Text></View>*/}
                 <Image source={images[coverImageName]} style={styles.cardBigImage}/>
                 <View style={styles.cardBigBody}>
-                    <Text style={styles.cardBigName}>{item.name}</Text>
-                    <Text style={styles.cardBigDescription} numberOfLines={3} ellipsizeMode='tail'>
-                        {item.description}
-                    </Text>
+                    <View style={styles.cardBigTextContent}>
+                        <Text style={styles.cardBigName}>{item.name}</Text>
+                        <Text style={styles.cardBigDescription} numberOfLines={3} ellipsizeMode='tail'>
+                            {item.description}
+                        </Text>
+                    </View>
                     <View style={styles.cardBigFooter}>
                         <Rating value={this.state.rating}/>
                         <Text

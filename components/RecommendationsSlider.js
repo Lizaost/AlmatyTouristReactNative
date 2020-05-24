@@ -123,14 +123,13 @@ export class RecommendationsSlider extends Component {
 
     render() {
         let screenWidth = Dimensions.get('window').width;
-        return   this.state.itemsLoaded ?
-            <View style={{
+        return this.state.itemsLoaded ? <View style={{
                 flex: 1,
                 flexDirection: 'row',
                 justifyContent: 'center',
                 marginVertical: 0,
                 paddingVertical: 0,
-                marginBottom: -40,
+                //marginBottom: -40,
             }}>
                 <Carousel
                     ref={(c) => {
@@ -139,11 +138,10 @@ export class RecommendationsSlider extends Component {
                     data={this.state.itemsList}
                     renderItem={this._renderItem}
                     sliderWidth={screenWidth}
-                    itemWidth={screenWidth}
+                    itemWidth={screenWidth*0.8}
                     layout={'default'}
-                    layoutCardOffset={'18'}
+                    layoutCardOffset={'0'}
                 />
-            </View> :
-            <CardPlaceholder/>;
+            </View> : <CardPlaceholder/>;
     }
 }

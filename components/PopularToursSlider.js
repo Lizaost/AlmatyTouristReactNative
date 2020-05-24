@@ -95,7 +95,7 @@ export class PopularToursSlider extends Component {
                 justifyContent: 'center',
                 marginVertical: 0,
                 paddingVertical: 0,
-                marginBottom: -60
+                //marginBottom: -60
             }}>
                 <Carousel
                     ref={(c) => {
@@ -104,9 +104,9 @@ export class PopularToursSlider extends Component {
                     data={this.state.tours}
                     renderItem={this._renderItem}
                     sliderWidth={screenWidth}
-                    itemWidth={screenWidth}
+                    itemWidth={screenWidth*0.8}
                     layout={'default'}
-                    layoutCardOffset={'18'}
+                    layoutCardOffset={'0'}
                 />
             </View> :
             <CardPlaceholder/>;

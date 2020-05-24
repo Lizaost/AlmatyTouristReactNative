@@ -13,6 +13,8 @@ import Comment from '../components/Comment';
 import CommentInput from '../components/CommentInput';
 import TourCardSmall from '../components/TourCardSmall';
 import Rating from '../components/Rating';
+import {setI18nConfig, translate} from '../localization';
+import * as RNLocalize from 'react-native-localize';
 
 type Props = {};
 
@@ -33,6 +35,7 @@ export default class TourPage extends Component<Props> {
 
     constructor(props) {
         super(props);
+        setI18nConfig();
         this.state = {
             selectedPlaceId: null,
             tour: {},
@@ -49,6 +52,22 @@ export default class TourPage extends Component<Props> {
         this.loadTourComments();
         this.getTourRating();
     }
+
+    componentDidMount() {
+        RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    }
+
+    componentWillUnmount() {
+        RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    }
+
+    handleLocalizationChange = () => {
+        setI18nConfig()
+            .then(() => this.forceUpdate())
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
     storeLikes = async (value) => {
         try {
@@ -290,7 +309,7 @@ export default class TourPage extends Component<Props> {
                         data={this.state.comments}
                         renderItem={(item) => <Comment author={item['item']['author_name']}
                                                        rating={item['item']['rating']}
-                                                       text={item['item']['text']}/>}/> : <Text>LOADING COMMENTS</Text>}
+                                                       text={item['item']['text']}/>}/> : <Text>{translate('comments-loading')}</Text>}
 
             </View>
             <FavoriteButton style={styles.itemPageFavoriteButton} itemType={'tour'} itemId={tourId}/>
@@ -298,7 +317,7 @@ export default class TourPage extends Component<Props> {
 
         return (
             <ScrollView style={styles.itemPageContainer}>
-                {this.state.tourLoaded ? pageContents : <Text style={styles.loader}>'LOADING...'</Text>}
+                {this.state.tourLoaded ? pageContents : <Text style={styles.loader}>{translate("list-loading")}</Text>}
             </ScrollView>
         );
     }

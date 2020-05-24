@@ -1,5 +1,6 @@
 import React from 'react';
 import {Picker} from '@react-native-community/picker';
+import {translate} from "../localization"
 
 export default class PlacesFilterDropdown extends React.Component {
     state = {
@@ -14,16 +15,16 @@ export default class PlacesFilterDropdown extends React.Component {
     render() {
         return <Picker
             selectedValue={this.state.sorting}
-            style={{height: 50, width: 200}}
+            style={{height: 50, width: 250}}
             mode={'dropdown'}
             onValueChange={(itemValue, itemIndex) => {
                 this.handleItemSelect(itemValue, itemIndex);
             }
             }>
-            <Picker.Item label="A-Z" value="name ASC"/>
-            <Picker.Item label="Z-A" value="name DESC"/>
-            <Picker.Item label="New-Old" value="_id DESC"/>
-            <Picker.Item label="Old-New" value="_id ASC"/>
+            <Picker.Item label={translate('sorting-az')} value="name ASC"/>
+            <Picker.Item label={translate('sorting-za')} value="name DESC"/>
+            <Picker.Item label={translate('sorting-no')} value="_id DESC"/>
+            <Picker.Item label={translate('sorting-on')} value="_id ASC"/>
         </Picker>;
     }
 }

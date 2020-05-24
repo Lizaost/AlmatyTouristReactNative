@@ -5,19 +5,51 @@ import {View, Text, ScrollView, TouchableNativeFeedback, Image, Linking} from 'r
 import {styles} from '../styles.js';
 import {images} from '../images';
 
+import * as RNLocalize from 'react-native-localize';
+import i18n from 'i18n-js';
+import {translate, setI18nConfig} from '../localization';
+
 type Props = {};
 
 export default class OtherLinksPage extends Component<Props> {
-    static navigationOptions = {
-        title: 'Other',
+    // static navigationOptions = {
+    //     title: 'Other',
+    // };
+
+    static navigationOptions = ({navigation}) => ({
+        title: typeof (navigation.state.params) === 'undefined'
+        || typeof (navigation.state.params.title) === 'undefined' ? 'Other' : navigation.state.params.title,
+    });
+
+    setPageTitle = (title) => {
+        this.props.navigation.setParams({title: title});
+        console.log('Setting page title to ' + title);
     };
 
     constructor(props) {
         super(props);
+        setI18nConfig();
         this.state = {
             selectedPlaceId: null,
         };
+        this.setPageTitle(translate('other_links-page_title'));
     }
+
+    componentDidMount() {
+        RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    }
+
+    componentWillUnmount() {
+        RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    }
+
+    handleLocalizationChange = () => {
+        setI18nConfig()
+            .then(() => this.forceUpdate())
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
 
     _onAboutCityPressed = () => {
@@ -54,7 +86,7 @@ export default class OtherLinksPage extends Component<Props> {
                     <TouchableNativeFeedback onPress={this._onFAQPressed}>
                         <View style={styles.otherLink}>
                             <Text style={styles.otherLinkTitle}>
-                                FAQ
+                                {translate('links-FAQ')}
                             </Text>
                         </View>
                     </TouchableNativeFeedback>
@@ -62,7 +94,7 @@ export default class OtherLinksPage extends Component<Props> {
                     <TouchableNativeFeedback onPress={this._onAboutCityPressed}>
                         <View style={styles.otherLink}>
                             <Text style={styles.otherLinkTitle}>
-                                About Almaty
+                                {translate('links-about_city')}
                             </Text>
                         </View>
                     </TouchableNativeFeedback>
@@ -70,7 +102,7 @@ export default class OtherLinksPage extends Component<Props> {
                     <TouchableNativeFeedback onPress={this._onCovid19InfoPressed}>
                         <View style={styles.otherLink}>
                             <Text style={styles.otherLinkTitle}>
-                                COVID-19 Info
+                                {translate('links-COVID19')}
                             </Text>
                         </View>
                     </TouchableNativeFeedback>
@@ -78,7 +110,7 @@ export default class OtherLinksPage extends Component<Props> {
                     <TouchableNativeFeedback onPress={this._onTermsAndConditionsPressed}>
                         <View style={styles.otherLink}>
                             <Text style={styles.otherLinkTitle}>
-                                Terms&Conditions
+                                {translate('links-terms_and_conditions')}
                             </Text>
                         </View>
                     </TouchableNativeFeedback>
@@ -86,7 +118,7 @@ export default class OtherLinksPage extends Component<Props> {
                     <TouchableNativeFeedback onPress={this._onContactUsPressed}>
                         <View style={styles.otherLink}>
                             <Text style={styles.otherLinkTitle}>
-                                Contact us
+                                {translate('links-contact_us')}
                             </Text>
                         </View>
                     </TouchableNativeFeedback>

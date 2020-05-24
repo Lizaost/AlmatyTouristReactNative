@@ -4,6 +4,7 @@ import DeviceInfo from 'react-native-device-info';
 import {styles} from '../styles.js';
 import Rating from './Rating';
 import RatingInput from './RatingInput';
+import {translate} from '../localization';
 
 export default class Comment extends React.Component {
 
@@ -121,8 +122,7 @@ export default class Comment extends React.Component {
                             title={'SEND'}/>
                 </View>
             </View>
-            : <Text style={styles.itemAlreadyCommentedMessage}>You have already reviewed this item. Only one review from
-                user is allowed.</Text>)
+            : <Text style={styles.itemAlreadyCommentedMessage}>{translate('already-commented-item')}</Text>)
             : <View/>;
 
         return (<View style={styles.commentInput}>

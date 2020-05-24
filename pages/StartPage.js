@@ -19,8 +19,18 @@ import CardContainer from 'react-navigation-stack/src/vendor/views/Stack/CardCon
 type Props = {};
 
 export default class StartPage extends Component<Props> {
-    static navigationOptions = {
-        title: 'Almaty Tourist Start Page',
+    // static navigationOptions = {
+    //     title: 'Almaty Tourist Start Page',
+    // };
+
+    static navigationOptions = ({navigation}) => ({
+        title: typeof (navigation.state.params) === 'undefined'
+        || typeof (navigation.state.params.title) === 'undefined' ? 'Almaty Tourist' : navigation.state.params.title,
+    });
+
+    setPageTitle = (title) => {
+        this.props.navigation.setParams({title: title});
+        console.log('Setting page title to ' + title);
     };
 
     state = {
@@ -35,6 +45,7 @@ export default class StartPage extends Component<Props> {
         super(props);
         setI18nConfig();
         this.getLikes();
+        this.setPageTitle(translate('start_page-page_title'));
     }
 
     componentDidMount() {

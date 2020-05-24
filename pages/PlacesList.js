@@ -12,15 +12,31 @@ import TourCardSmall from '../components/TourCardSmall';
 import ToursFilterDropdown from '../components/ToursFilterDropdown';
 import PlacesFilterDropdown from '../components/PlacesFilterDropdown';
 
+import * as RNLocalize from 'react-native-localize';
+import i18n from 'i18n-js';
+import {translate, setI18nConfig} from '../localization';
+
 type Props = {};
 
 export default class PlacesList extends Component<Props> {
-    static navigationOptions = {
-        title: 'Places',
+    // static navigationOptions = {
+    //     title: 'Places',
+    // };
+
+    static navigationOptions = ({navigation}) => ({
+        title: typeof (navigation.state.params) === 'undefined'
+        || typeof (navigation.state.params.title) === 'undefined' ? 'Places' : navigation.state.params.title,
+    });
+
+
+    setPageTitle = (title) => {
+        this.props.navigation.setParams({title: title});
+        console.log('Setting page title to ' + title);
     };
 
     constructor(props) {
         super(props);
+        setI18nConfig();
         this.state = {
             places: [],
             places_number: 0,
@@ -28,7 +44,33 @@ export default class PlacesList extends Component<Props> {
             sorting: 'name ASC',
         };
         this.loadPlaces();
+        this.setPageTitle(translate('places_list-page_title'));
     }
+
+    componentDidMount() {
+        this.focusListener = this.props.navigation.addListener(
+            'didFocus',
+            () => {
+                this.setState({renderAgain: true});
+                this.loadPlaces();
+                console.log('The page will be reloaded soon');
+            },
+        );
+        RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    }
+
+    componentWillUnmount() {
+        this.focusListener.remove();
+        RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    }
+
+    handleLocalizationChange = () => {
+        setI18nConfig()
+            .then(() => this.forceUpdate())
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
     loadPlaces = () => {
         //let db = openDatabase({name: 'db_en.db', createFromLocation: '~db_en.db'});
@@ -94,7 +136,7 @@ export default class PlacesList extends Component<Props> {
                 {/*    title='Open Place with id 12'*/}
                 {/*/>*/}
                 <View style={styles.listFilterRow}>
-                    <Text style={styles.listSortingTitle}>Sorting: </Text>
+                    <Text style={styles.listSortingTitle}>{translate('list-sorting')} </Text>
                     <PlacesFilterDropdown itemSelectHandle={(itemValue) => {
                         this._onSortingDirectionSelected(itemValue);
                     }}/>
@@ -104,7 +146,7 @@ export default class PlacesList extends Component<Props> {
                     renderItem = {(item) => <PlaceCardSmall nav={this.props.navigation} onpressHandler={this._onOpenPlacePressed} item={item["item"]}/>}
                     keyExtractor = {item => item._id}/>  :
                 <Text style={styles.description}>
-                    LOADING
+                    {translate('list-loading')}
                 </Text>}
             </View>
         );

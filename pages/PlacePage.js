@@ -15,6 +15,10 @@ import PlaceCardSmall from '../components/PlaceCardSmall';
 import CommentInput from '../components/CommentInput';
 import Rating from '../components/Rating';
 
+import * as RNLocalize from 'react-native-localize';
+import i18n from 'i18n-js';
+import {translate, setI18nConfig} from '../localization';
+
 type Props = {};
 
 export default class PlacePage extends Component<Props> {
@@ -47,6 +51,7 @@ export default class PlacePage extends Component<Props> {
 
     constructor(props) {
         super(props);
+        setI18nConfig();
         this.state = {
             selectedPlaceId: null,
             place: {},
@@ -62,6 +67,22 @@ export default class PlacePage extends Component<Props> {
         this.loadPlaceComments();
         this.getPlaceRating();
     }
+
+    componentDidMount() {
+        RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    }
+
+    componentWillUnmount() {
+        RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    }
+
+    handleLocalizationChange = () => {
+        setI18nConfig()
+            .then(() => this.forceUpdate())
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
     loadPlace = () => {
         //let db = openDatabase({name: 'db_en.db', createFromLocation: '~db_en.db'});
@@ -248,7 +269,7 @@ export default class PlacePage extends Component<Props> {
                 <View style={styles.itemPageInfoSection}>
                     <TouchableNativeFeedback onPress={this._openMapWithPlaceAddress}>
                         <View style={styles.itemPageInfoRow}>
-                            <Text style={styles.itemPageInfoTitle}>Address</Text>
+                            <Text style={styles.itemPageInfoTitle}>{translate('item_info-address')}</Text>
                             <Text style={styles.itemPageInfoContent}>{this.state.place.address}</Text>
                         </View>
                     </TouchableNativeFeedback>
@@ -274,7 +295,7 @@ export default class PlacePage extends Component<Props> {
                         data={this.state.comments}
                         renderItem={(item) => <Comment author={item['item']['author_name']}
                                                        rating={item['item']['rating']}
-                                                       text={item['item']['text']}/>}/> : <Text>LOADING COMMENTS</Text>}
+                                                       text={item['item']['text']}/>}/> : <Text>{translate('comments-loading')}</Text>}
             </View>
             <FavoriteButton style={styles.itemPageFavoriteButton} itemType={'place'} itemId={placeId}/>
             <View style={[styles.placePageGoButton, {width: 50}]}>
@@ -285,7 +306,7 @@ export default class PlacePage extends Component<Props> {
 
         return (
             <ScrollView style={styles.itemPageContainer}>
-                {this.state.placeLoaded ? pageContents : <Text style={styles.loader}>LOADING...</Text>}
+                {this.state.placeLoaded ? pageContents : <Text style={styles.loader}>{translate("list-loading")}</Text>}
             </ScrollView>
         );
     }

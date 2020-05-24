@@ -7,12 +7,25 @@ import AsyncStorage from '@react-native-community/async-storage';
 import TourCard from '../components/TourCard';
 import FavoritesListItem from '../components/FavoritesListItem';
 import CommentPlaceholder from '../components/CommentPlaceholder';
+import * as RNLocalize from 'react-native-localize';
+import i18n from 'i18n-js';
+import {translate, setI18nConfig} from '../localization';
 
 type Props = {};
 
 export default class FavoritesList extends Component<Props> {
-    static navigationOptions = {
-        title: 'Favorites',
+    // static navigationOptions = {
+    //     title: 'Favorites',
+    // };
+
+    static navigationOptions = ({navigation}) => ({
+        title: typeof (navigation.state.params) === 'undefined'
+        || typeof (navigation.state.params.title) === 'undefined' ? 'Almaty Tourist' : navigation.state.params.title,
+    });
+
+    setPageTitle = (title) => {
+        this.props.navigation.setParams({title: title});
+        console.log('Setting page title to ' + title);
     };
 
     state = {
@@ -23,6 +36,7 @@ export default class FavoritesList extends Component<Props> {
 
     constructor(props) {
         super(props);
+        setI18nConfig();
         this.state = {
             selectedPlaceId: null,
             favorites: [],
@@ -34,7 +48,24 @@ export default class FavoritesList extends Component<Props> {
         this.props.navigation.addListener('willFocus', () => {
             this.getLikes();
         });
+        this.setPageTitle(translate('favorites_list-page_title'));
     }
+
+    componentDidMount() {
+        RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    }
+
+    componentWillUnmount() {
+        RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    }
+
+    handleLocalizationChange = () => {
+        setI18nConfig()
+            .then(() => this.forceUpdate())
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
     getLikes = async () => {
         try {

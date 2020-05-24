@@ -10,6 +10,8 @@ import getDatabaseConnection from '../db.js';
 import TourCardSmall from '../components/TourCardSmall';
 import {NavigationEvents} from 'react-navigation';
 import ToursFilterDropdown from '../components/ToursFilterDropdown';
+import {setI18nConfig, translate} from '../localization';
+import * as RNLocalize from "react-native-localize";
 
 type Props = {};
 
@@ -23,8 +25,19 @@ type Props = {};
 // }
 
 export default class ToursList extends Component<Props> {
-    static navigationOptions = {
-        title: 'Tours',
+    // static navigationOptions = {
+    //     title: 'Tours',
+    // };
+
+    static navigationOptions = ({navigation}) => ({
+        title: typeof (navigation.state.params) === 'undefined'
+        || typeof (navigation.state.params.title) === 'undefined' ? 'Tours' : navigation.state.params.title,
+    });
+
+
+    setPageTitle = (title) => {
+        this.props.navigation.setParams({title: title});
+        console.log('Setting page title to ' + title);
     };
 
     state = {
@@ -35,10 +48,12 @@ export default class ToursList extends Component<Props> {
 
     constructor(props) {
         super(props);
+        setI18nConfig();
         // this.state = {
         //     tours: null,
         // };
         this.loadTours();
+        this.setPageTitle(translate('tours_list-page_title'));
     }
 
     componentDidMount(): void {
@@ -50,11 +65,21 @@ export default class ToursList extends Component<Props> {
                 console.log('The page will be reloaded soon');
             },
         );
+        RNLocalize.addEventListener('change', this.handleLocalizationChange);
     }
 
     componentWillUnmount(): void {
         this.focusListener.remove();
+        RNLocalize.removeEventListener('change', this.handleLocalizationChange);
     }
+
+    handleLocalizationChange = () => {
+        setI18nConfig()
+            .then(() => this.forceUpdate())
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
     loadTours = () => {
         //let db = openDatabase({name: 'db_en.db', createFromLocation: '~db_en.db'});
@@ -122,7 +147,7 @@ export default class ToursList extends Component<Props> {
                 {/*    </Text>}*/}
                 <NavigationEvents onWillFocus={() => this.loadTours()}/>
                 <View style={styles.listFilterRow}>
-                    <Text style={styles.listSortingTitle}>Sorting: </Text>
+                    <Text style={styles.listSortingTitle}>{translate('list-sorting')} </Text>
                     <ToursFilterDropdown itemSelectHandle={(itemValue) => {
                         this._onSortingDirectionSelected(itemValue);
                     }}/>
@@ -136,7 +161,7 @@ export default class ToursList extends Component<Props> {
                                                              item={item['item']} rerender={this.state.renderAgain}/>}
                         keyExtractor={item => item._id}/> :
                     <Text style={styles.description}>
-                        LOADING
+                        {translate('list-loading')}
                     </Text>}
             </View>
         );

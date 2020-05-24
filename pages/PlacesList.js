@@ -9,6 +9,8 @@ import getDatabaseConnection from '../db';
 import TourCard from '../components/TourCard';
 import PlaceCardSmall from '../components/PlaceCardSmall';
 import TourCardSmall from '../components/TourCardSmall';
+import ToursFilterDropdown from '../components/ToursFilterDropdown';
+import PlacesFilterDropdown from '../components/PlacesFilterDropdown';
 
 type Props = {};
 
@@ -22,6 +24,8 @@ export default class PlacesList extends Component<Props> {
         this.state = {
             places: [],
             places_number: 0,
+            isPlacesListLoaded: false,
+            sorting: 'name ASC',
         };
         this.loadPlaces();
     }
@@ -31,7 +35,7 @@ export default class PlacesList extends Component<Props> {
         let db = getDatabaseConnection();
         db.transaction(tx => {
             tx.executeSql(
-                'SELECT * FROM places',
+                'SELECT * FROM places ORDER BY ' + this.state.sorting,
                 [],
                 (tx, results) => {
                     let len = results.rows.length;
@@ -47,6 +51,7 @@ export default class PlacesList extends Component<Props> {
                         //alert(JSON.stringify(temp));
                         this.setState({
                             places: temp,
+                            isPlacesListLoaded: true
                         });
                         //alert("*" + this.state.tours[0].name);
                     } else {
@@ -59,6 +64,11 @@ export default class PlacesList extends Component<Props> {
     _onOpenPlacePressed = (placeId) => {
         this.props.navigation.navigate(
             'PlacePage', {placeId: placeId});
+    };
+
+    _onSortingDirectionSelected = (sorting) => {
+        this.setState({sorting: sorting, isPlacesListLoaded: false});
+        this.loadPlaces();
     };
 
     render() {
@@ -83,10 +93,19 @@ export default class PlacesList extends Component<Props> {
                 {/*    color='#48BBEC'*/}
                 {/*    title='Open Place with id 12'*/}
                 {/*/>*/}
-                <FlatList
+                <View style={styles.listFilterRow}>
+                    <Text style={styles.listSortingTitle}>Sorting: </Text>
+                    <PlacesFilterDropdown itemSelectHandle={(itemValue) => {
+                        this._onSortingDirectionSelected(itemValue);
+                    }}/>
+                </View>
+                {this.state.isPlacesListLoaded ? <FlatList
                     data = {this.state.places}
                     renderItem = {(item) => <PlaceCardSmall nav={this.props.navigation} onpressHandler={this._onOpenPlacePressed} item={item["item"]}/>}
-                    keyExtractor = {item => item._id}/>
+                    keyExtractor = {item => item._id}/>  :
+                <Text style={styles.description}>
+                    LOADING
+                </Text>}
             </View>
         );
     }

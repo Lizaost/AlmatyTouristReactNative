@@ -6,8 +6,8 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 
-import {colors} from "./colors.js";
-import {images} from "./images.js";
+import {colors} from './colors.js';
+import {images} from './images.js';
 
 import StartPage from './pages/StartPage';
 import ToursList from './pages/ToursList';
@@ -18,9 +18,11 @@ import AboutCityPage from './pages/AboutCityPage';
 import FavoritesList from './pages/FavoritesList';
 import Covid19InfoPage from './pages/Covid19InfoPage';
 import FAQPage from './pages/FAQPage';
-import TermsAndConditionsPage from "./pages/TermsAndConditionsPage"
+import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
 import OtherLinksPage from './pages/OtherLinksPage';
 
+import i18n from 'i18n-js';
+import {translate, setI18nConfig} from './localization';
 
 // const instructions = Platform.select({ ... });
 
@@ -140,7 +142,7 @@ const TabNavigator = createBottomTabNavigator(
                     return (
                         <Image
                             source={
-                                images.home
+                                focused ? images.home_icon_focused : images.home_icon
                             }
                             style={{
                                 width: 20,
@@ -153,7 +155,7 @@ const TabNavigator = createBottomTabNavigator(
                     return (
                         <Image
                             source={
-                                images.world
+                                focused ? images.globe_icon_focused : images.globe_icon
                             }
                             style={{
                                 width: 20,
@@ -166,7 +168,7 @@ const TabNavigator = createBottomTabNavigator(
                     return (
                         <Image
                             source={
-                                images.location
+                                focused ? images.pin_icon_focused : images.pin_icon
                             }
                             style={{
                                 width: 20,
@@ -179,7 +181,7 @@ const TabNavigator = createBottomTabNavigator(
                     return (
                         <Image
                             source={
-                                images.empty_star
+                                focused ? images.star_icon_focused : images.star_icon
                             }
                             style={{
                                 width: 20,
@@ -192,7 +194,7 @@ const TabNavigator = createBottomTabNavigator(
                     return (
                         <Image
                             source={
-                                images.help1
+                                focused ? images.question_icon_focused : images.question_icon
                             }
                             style={{
                                 width: 20,
@@ -207,6 +209,7 @@ const TabNavigator = createBottomTabNavigator(
         tabBarOptions: {
             activeTintColor: colors.colorPrimaryDark,
             inactiveTintColor: colors.colorSecondaryText,
+            showLabel: false,
         },
     },
 );

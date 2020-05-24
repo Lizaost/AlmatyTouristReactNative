@@ -27,6 +27,17 @@ export const images = {
     world: require("./Resources/images/world.png"),
     settings: require("./Resources/images/settings.png"),
 
+    home_icon: require("./Resources/images/home_icon.png"),
+    home_icon_focused: require("./Resources/images/home_icon_focused.png"),
+    globe_icon: require("./Resources/images/globe_icon.png"),
+    globe_icon_focused: require("./Resources/images/globe_icon_focused.png"),
+    pin_icon: require("./Resources/images/pin_icon.png"),
+    pin_icon_focused: require("./Resources/images/pin_icon_focused.png"),
+    star_icon: require("./Resources/images/star_icon.png"),
+    star_icon_focused: require("./Resources/images/star_icon_focused.png"),
+    question_icon: require("./Resources/images/question_icon.png"),
+    question_icon_focused: require("./Resources/images/question_icon_focused.png"),
+
     covid19_slide: require("./Resources/images/covid19_slider_image.png"),
     welcome_slide: require("./Resources/images/welcome_slider_image.png"),
 };

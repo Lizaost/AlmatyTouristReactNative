@@ -124,18 +124,18 @@ export default class StartPage extends Component<Props> {
 
                     <View style={styles.startPageSection}>
                         <Text style={styles.startPageSectionHeader}>
-                            {translate('start-page_recommendation-title')}
+                            {translate('start_page-recommendation_title')}
                         </Text>
                         <RecommendationsSlider nav={this.props.navigation}/>
                     </View>
 
                     <View style={styles.startPageSection}>
-                        <Text style={styles.startPageSectionHeader}>{translate('start-page_tours-title')}</Text>
+                        <Text style={styles.startPageSectionHeader}>{translate('start_page-tours_title')}</Text>
                         <PopularToursSlider nav={this.props.navigation}/>
                     </View>
 
                     <View style={styles.startPageSection}>
-                        <Text style={styles.startPageSectionHeader}>{translate('start-page_places-title')}</Text>
+                        <Text style={styles.startPageSectionHeader}>{translate('start_page-places_title')}</Text>
                         <InterestingPlacesSlider nav={this.props.navigation}/>
                     </View>
 

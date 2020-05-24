@@ -555,5 +555,16 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
 
+
+    listFilterRow: {
+        flexDirection: 'row',
+        paddingLeft: 16
+    },
+
+    listSortingTitle: {
+        fontSize: 16,
+        marginTop: 14,
+    }
+
 });
 

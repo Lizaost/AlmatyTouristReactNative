@@ -1,7 +1,12 @@
 {
-  "start-page_page-title": "Almaty Tourist",
-  "start-page_recommendation-title": "Just for you",
-  "start-page_tours-title": "Popular tours",
-  "start-page_places-title": "Interesting places",
-  "hi": "rus"
+  "start_page-page_title": "Almaty Tourist",
+  "start_page-recommendation_title": "Just for you",
+  "start_page-tours_title": "Popular tours",
+  "start_page-places_title": "Interesting places",
+
+  "tabs-home": "Home",
+  "tabs-tours": "Tours",
+  "tabs-places": "Places",
+  "tabs-favorites": "Favorites",
+  "tabs-other": "Other"
 }

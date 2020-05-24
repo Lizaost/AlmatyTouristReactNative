@@ -30,7 +30,7 @@ export default class ToursList extends Component<Props> {
     state = {
         tours: null,
         isToursListLoaded: false,
-        sorting: "name ASC"
+        sorting: 'name ASC',
     };
 
     constructor(props) {
@@ -45,8 +45,11 @@ export default class ToursList extends Component<Props> {
         this.focusListener = this.props.navigation.addListener(
             'didFocus',
             () => {
-                this.setState({renderAgain: true}); this.loadTours(); console.log("The page will be reloaded soon")}
-        )
+                this.setState({renderAgain: true});
+                this.loadTours();
+                console.log('The page will be reloaded soon');
+            },
+        );
     }
 
     componentWillUnmount(): void {
@@ -58,7 +61,7 @@ export default class ToursList extends Component<Props> {
         let db = getDatabaseConnection();
         db.transaction(tx => {
             tx.executeSql(
-                'SELECT * FROM tours',
+                'SELECT * FROM tours ORDER BY ' + this.state.sorting,
                 [],
                 (tx, results) => {
                     let len = results.rows.length;
@@ -90,11 +93,16 @@ export default class ToursList extends Component<Props> {
             'TourPage', {tourId: tourId});
     };
 
+    _onSortingDirectionSelected = (sorting) => {
+        this.setState({sorting: sorting, isToursListLoaded: false});
+        this.loadTours();
+    };
+
 
     render() {
         console.log('ToursList.render');
         return (
-            <View>
+            <View style={{flexDirection: 'column'}}>
                 {/*<Text style={styles.description}>*/}
                 {/*    TOURS LIST*/}
                 {/*</Text>*/}
@@ -114,14 +122,18 @@ export default class ToursList extends Component<Props> {
                 {/*    </Text>}*/}
                 <NavigationEvents onWillFocus={() => this.loadTours()}/>
                 <View style={styles.listFilterRow}>
-                    <ToursFilterDropdown itemSelectHandle = {(itemValue) => {this.setState({sorting: itemValue})}}/>
-                    <Text>{this.state.sorting}</Text>
-            </View>
+                    <Text style={styles.listSortingTitle}>Sorting: </Text>
+                    <ToursFilterDropdown itemSelectHandle={(itemValue) => {
+                        this._onSortingDirectionSelected(itemValue);
+                    }}/>
+                </View>
                 {this.state.isToursListLoaded ?
                     <FlatList
+                        style={{paddingBottom: 50}}
                         data={this.state.tours}
-                        renderItem={(item) => <TourCardSmall nav={this.props.navigation} onpressHandler={this._onOpenTourPressed}
-                                                        item={item['item']} rerender={this.state.renderAgain}/>}
+                        renderItem={(item) => <TourCardSmall nav={this.props.navigation}
+                                                             onpressHandler={this._onOpenTourPressed}
+                                                             item={item['item']} rerender={this.state.renderAgain}/>}
                         keyExtractor={item => item._id}/> :
                     <Text style={styles.description}>
                         LOADING
